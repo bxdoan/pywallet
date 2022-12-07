@@ -27,4 +27,11 @@ class Print(object):
             print_fmt += f'{title} - '
 
         print(print_fmt, end='')
-        print(message, end="", flush=True)
+        print(message, end="\n", flush=True)
+
+
+def printd(msg='', type_print=None) -> None:
+    if type_print:
+        Print(type_print=type_print)._out(message=msg)
+    else:
+        Print()._out(message=msg)

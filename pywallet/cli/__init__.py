@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import click
-import os
 
 from pywallet.cli.config import config_command
 from pywallet.cli.address import get_address
@@ -12,12 +11,17 @@ from pywallet.cli.balance import balance_handler
 
 __version__ = "0.1.0"
 
+
 @click.group()
 @click.version_option(version = __version__)
 @click.pass_context
 def cli(ctx):
-    """Tartarus wallet: Micro wallet by Terry"""
+    """
+    PyWallet: Micro wallet by BXDOAN
+    Email: hi@bxdoan.com
+    """
     pass
+
 
 cli.add_command(config_command, "config")
 cli.add_command(get_address, "address")

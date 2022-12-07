@@ -4,7 +4,8 @@ from eth_account import Account
 import secrets
 import json
 from pywallet import config, constants, helper
-from pywallet.print import Print
+from pywallet.print import printd
+
 
 class Wallet():
     def __init__(self, keypair_path: str):
@@ -24,9 +25,7 @@ class Wallet():
 
     def get_address(self):
         keypair_encrypted = self.load_keypair_encrypted()
-
         return "0x" + keypair_encrypted["address"]
-    
 
     def create_wallet(self, private_key: str, password: str, is_override: bool) -> str:
         if len(private_key) < 32:
@@ -37,7 +36,6 @@ class Wallet():
         json_object = json.dumps(encrypted_key, indent = 4)
         with open(self.keypair_path, "w+") as outfile:
             outfile.write(json_object)
-
         
         return account.address
 

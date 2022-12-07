@@ -1,19 +1,22 @@
 #! /usr/bin/env python3
 import click
-import os
 from getpass import getpass
 from pywallet.wallet import Wallet
 from pywallet.config import Config
 from pywallet.print import Print
 
+
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 def create_wallet():
-    """create new keypair"""
+    """
+    Create new keypair\n
+    Usage: create
+    """
     config = Config()
     wallet = Wallet(config.get_keypair_path())
 
     if wallet.is_wallet_exited():
-        Print.print_warning("Wallet existed, do you want to override (y/n): ")
+        print("Wallet existed, do you want to override (y/n): ")
         is_override = input()
 
         if is_override != 'y':

@@ -6,6 +6,8 @@
 PyWallet is python script encrypt your private key. Unlike normal extension wallet, PyWallet can't connect to browser, 
 so it can't be hack
 
+(This is a re-write of the original version of PyWallet which is no longer update, still available [here](https://github.com/bui-duc-huy/tartarus-wallet).)
+
 ![alt text](./assets/preview.jpg)
 
 ## Set up
@@ -21,7 +23,7 @@ pipenv sync
 
 2. Execute mod for wallet.py
 ```sh
-chmod 777 ./wallet.py
+chmod 777 ./pywallet.py
 ```
 
 ## Usage

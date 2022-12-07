@@ -30,22 +30,26 @@ def create_new_key(private_key, password):
     with open(".keypair" + ".json", "w") as outfile:
         outfile.write(json_object)
 
+
 def decrypt_wallet(wallet, password):
     decrypt_key = Account.decrypt(wallet, password)
-
     return decrypt_key
+
 
 def get_wallet_encrypt():
     with open(".keypair.json", 'r') as openfile:
         wallet = json.load(openfile)
     return wallet
 
+
 def get_wallet_address_from_file_name(name):
     return name.split(".")[0]
+
 
 def get_wallet_by_index(index):
     wallets = get_wallets_list()
     return wallets[index - 1]
+
 
 def to_checksum_address(address):
     return Web3.toChecksumAddress(address)

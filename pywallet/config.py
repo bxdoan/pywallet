@@ -8,6 +8,7 @@ default_config = {
     "url": "https://mainnet.infura.io/v3/9e4bc49c44c34ac7ae3e5c34fe5e1d62"
 }
 
+
 class Config():
     def __init__(self):
         config_path = os.path.join(constants.WALLET_PATH, "config.json")
