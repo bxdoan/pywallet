@@ -1,19 +1,25 @@
 #! /usr/bin/env python3
 import os
 import json
-from pywallet import constants
+from pywallet.constants import JSON_CONF, WALLET_PATH, PrintType
+from pywallet.print import printd
 
 default_config = {
-    "keypair_path": constants.WALLET_PATH + "/wallet" + "/id.json",
+    "keypair_path": WALLET_PATH + "/wallet" + "/id.json",
     "url": "https://mainnet.infura.io/v3/9e4bc49c44c34ac7ae3e5c34fe5e1d62"
 }
 
 
-class Config():
+class Config(object):
     def __init__(self):
-        config_path = os.path.join(constants.WALLET_PATH, "config.json")
+        self.config = None
+        self._get_config()
+
+    def _get_config(self) -> dict:
+        config_path = os.path.join(WALLET_PATH, JSON_CONF)
         with open(config_path, "r") as f:
             self.config = json.load(f)
+        return self.config
 
     def get_config(self):
         return self.config
@@ -21,33 +27,30 @@ class Config():
     def set_config(self, url: str, keypair_file: str):
         config = self.config
         if url is not None:
-            print(constants.BOLD + "URL: " + constants.CEND, end='')
-            print(url)
+            printd(msg="URL: " + url, type_print=PrintType.SUCCESS)
             config["url"] = url
         if keypair_file is not None:
-            print(constants.BOLD + "Keypair file: " + constants.CEND, end='')
-            print(keypair_file)
+            printd(msg="Keypair file: " + keypair_file, type_print=PrintType.SUCCESS)
             config["keypair_path"] = keypair_file
 
-        config_path = os.path.join(constants.WALLET_PATH, "config.json")
+        config_path = os.path.join(WALLET_PATH, JSON_CONF)
         with open(config_path, "w+") as f:
             f.write(json.dumps(config, indent = 4))
 
         return True
-        print(constants.BOLD + "Config updated" + constants.CEND, end='')
+        printd("Config updated", type_print=PrintType.SUCCESS)
 
-
-    def create_default_config(path: str) -> None:
+    def create_default_config(self, path: str) -> None:
         with open(path, "w+") as f:
             f.write(json.dumps(default_config, indent = 4))
 
-    def check_config_exited():
-        config_path = os.path.join(wallet_path, 'config.json')
+    def check_config_exited(self) -> None:
+        config_path = os.path.join(WALLET_PATH, JSON_CONF)
         if not os.path.isfile(config_path):
-            create_default_config(config_path)
+            self.create_default_config(config_path)
 
-    def is_wallet_exited() -> bool:
-        config_path = os.path.join(wallet_path, self.config["keypair_path"])
+    def is_wallet_exited(self) -> bool:
+        config_path = os.path.join(self.config["keypair_path"])
         if not os.path.isfile(config_path):
             False
         else:
@@ -57,16 +60,10 @@ class Config():
         return self.config["keypair_path"]
 
     def get_url(self) -> str:
-        config = self.get_config()
         return self.config["url"]
 
     def print_config(self) -> None:
         keypair_path = self.config["keypair_path"]
         url = self.config["url"]
-
-        print(constants.BOLD + "Keypair path: " + constants.CEND, end='')
-        print(keypair_path)
-        print(constants.BOLD + "RPC Url: " + constants.CEND, end='')
-        print(url)
-        pass
-
+        printd(msg="URL: " + url, type_print=PrintType.SUCCESS)
+        printd(msg="Keypair Path" + keypair_path, type_print=PrintType.SUCCESS)

@@ -7,13 +7,26 @@ name = "pypi"
 eth-account = "==0.5.7"
 web3 = "==5.28.0"
 click = "*"
-pytest= "*"
 eth-tester = "*"
 py-evm="*"
 vyper = "*"
 lark = "*"
 
+#test
+pytest = "*"
+pytest-cov = "*"
+pytest-xdist = "*"
+pytest-mock = "*"
+pytest-asyncio = "*"
+pytest-forked = "*"
+pytest-randomly = "*"
+pytest-timeout = "*"
+pytest-watch = "*"
+pytest-repeat = "*"
+pytest-rerunfailures = "*"
+flake8 = "*"
+
 [dev-packages]
 
 [requires]
-python_version = "3.9"
+python_version = "3.9.13"

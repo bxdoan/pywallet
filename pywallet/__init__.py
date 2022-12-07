@@ -1,7 +1,6 @@
 import os
 import json
 from pywallet import constants
-from pywallet.print import Print
 
 default_config = {
     "keypair_path": constants.WALLET_PATH + "/wallet" + "/id.json",
@@ -13,7 +12,7 @@ def set_up():
     if not os.path.exists(constants.WALLET_PATH):
         os.makedirs(constants.WALLET_PATH)
 
-        config_path = os.path.join(constants.WALLET_PATH, "config.json")
+        config_path = os.path.join(constants.WALLET_PATH, JSON_CONF)
         with open(config_path, "w+") as f:
             f.write(json.dumps(default_config, indent = 4))
 

@@ -7,8 +7,8 @@ function _() {
     # prepare :pipenv binary
     if [[ -f "$HOME/.pyenv/shims/pipenv" ]]; then
       [ -x pipenv ] && pipenv='pipenv' || pipenv="$HOME/.pyenv/shims/pipenv"
-    elif [[ -f "/opt/homebrew/bin/pipenv" ]]; then
-      pipenv="/opt/homebrew/bin/pipenv"
+    elif [[ -f "$HOME/.local/bin/pipenv" ]]; then
+      [ -x pipenv ] && pipenv='pipenv' || pipenv="$HOME/.local/bin/pipenv"
     else
       [ -x pipenv ] && pipenv='pipenv' || pipenv="$HOME/.pyenv/shims/pipenv"
     fi
