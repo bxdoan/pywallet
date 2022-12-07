@@ -1,8 +1,8 @@
 from unittest import TestCase
 import pytest
 
-from tartarus.constants import ETH_NATIVE_ADDRESS
-from tartarus.token import Token
+from pywallet.constants import ETH_NATIVE_ADDRESS
+from pywallet.token import Token
 
 TOKEN_NAME = "BuiCoin"
 TOKEN_SYMBOL = "BUI"

@@ -1,10 +1,10 @@
 #! /usr/bin/env python3
 import click
-from tartarus.config import Config
-from tartarus.constants import ETH_NATIVE_ADDRESS
-from tartarus.wallet import Wallet 
-from tartarus.print import Print
-from tartarus.token import Token
+from pywallet.config import Config
+from pywallet.constants import ETH_NATIVE_ADDRESS
+from pywallet.wallet import Wallet
+from pywallet.print import Print
+from pywallet.token import Token
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 @click.option('-t', '--token-address', 'token_address', help="Token address", default="Native token", show_default=True)

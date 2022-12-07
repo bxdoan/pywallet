@@ -2,9 +2,9 @@
 import click
 import os
 from getpass import getpass
-from tartarus.wallet import Wallet
-from tartarus.config import Config
-from tartarus.print import Print
+from pywallet.wallet import Wallet
+from pywallet.config import Config
+from pywallet.print import Print
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 def create_wallet():

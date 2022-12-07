@@ -2,9 +2,9 @@
 import json
 import os
 import click
-from tartarus import constants
-from tartarus.config import Config
-from tartarus.print import Print
+from pywallet import constants
+from pywallet.config import Config
+from pywallet.print import Print
 
 config = Config()
 

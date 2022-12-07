@@ -1,8 +1,8 @@
 #! /usr/bin/env python3
 import click
-from tartarus.config import Config 
-from tartarus.wallet import Wallet 
-from tartarus.print import Print
+from pywallet.config import Config
+from pywallet.wallet import Wallet
+from pywallet.print import Print
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 def get_address():

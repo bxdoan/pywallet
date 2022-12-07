@@ -1,4 +1,4 @@
 #! /usr/bin/env python3
-from tartarus.cli import cli
+from pywallet.cli import cli
 
 cli()

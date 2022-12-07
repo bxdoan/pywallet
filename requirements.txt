@@ -1,9 +1,9 @@
 eth_account==0.5.7
 web3==5.28.0
-click==7.1.2
-pytest==7.2.0
+click
+pytest
 eth-tester
 eth-utils
 py-evm
-vyper==0.3.7
-lark==1.1.4
+vyper
+lark

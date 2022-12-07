@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
-from tartarus import constants
-from tartarus.constants import PrintType
+from pywallet import constants
+from pywallet.constants import PrintType
 
 
 class Print(object):

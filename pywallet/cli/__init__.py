@@ -3,12 +3,12 @@
 import click
 import os
 
-from tartarus.cli.config import config_command
-from tartarus.cli.address import get_address
-from tartarus.cli.create import create_wallet
-from tartarus.cli.tornado import tornado_command
-from tartarus.cli.transfer import transfer_handler
-from tartarus.cli.balance import balance_handler
+from pywallet.cli.config import config_command
+from pywallet.cli.address import get_address
+from pywallet.cli.create import create_wallet
+from pywallet.cli.tornado import tornado_command
+from pywallet.cli.transfer import transfer_handler
+from pywallet.cli.balance import balance_handler
 
 __version__ = "0.1.0"
 

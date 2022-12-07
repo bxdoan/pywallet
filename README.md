@@ -14,7 +14,7 @@ so it can't be hack
 pip3 install -r requirements.txt
 
 ```
-or 
+or using pipenv
 ```sh
 pipenv sync
 ```
@@ -40,8 +40,8 @@ If you not have wallet, it will create new wallet and save to file *.json by com
 ```sh
  create --force
 ```
-You can change url and keypair_path for your own config in `~/.tartarus-wallet/config.json` and view your wallet 
-keypair in `~/tartarus-wallet/wallet/id.json`
+You can change url and keypair_path for your own config in `~/.pywallet/config.json` and view your wallet 
+keypair in `~/.pywallet/wallet/id.json`
 
 2. Get wallet address
 ```sh

@@ -11,6 +11,7 @@ from .constants import *
 provider = Web3.HTTPProvider('https://mainnet.infura.io/v3/9e4bc49c44c34ac7ae3e5c34fe5e1d62')
 w3 = Web3(provider)
 
+
 def type_writer(message, delay_time):
     for char in message:
         print(char, end='')
@@ -18,6 +19,7 @@ def type_writer(message, delay_time):
         time.sleep(delay_time)
 
     time.sleep(0.1)
+
 
 def create_new_key(private_key, password):
     account = Account.from_key(private_key)

@@ -1,5 +1,5 @@
-from tartarus.constants import PrintType
-from tartarus.print import Print
+from pywallet.constants import PrintType
+from pywallet.print import Print
 
 
 def test_print_error():

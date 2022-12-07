@@ -1,2 +1,2 @@
 import sys
-sys.path.append('../tartarus')
+sys.path.append('../pywallet')
