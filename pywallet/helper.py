@@ -42,10 +42,6 @@ def get_wallet_encrypt():
     return wallet
 
 
-def get_wallet_address_from_file_name(name):
-    return name.split(".")[0]
-
-
 def get_wallet_by_index(index):
     wallets = get_wallets_list()
     return wallets[index - 1]
@@ -102,10 +98,3 @@ def transfer_eth(address, private_key, receiver_address, amount):
     tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
 
     return tx_hash
-
-def is_exist_wallet():
-    return os.path.exists(".keypair.json")
-
-def print_result(title: str, message: str):
-    print(BOLD + title + ": " + CEND, end='')
-    print(message)

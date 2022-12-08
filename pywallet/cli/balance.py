@@ -19,8 +19,6 @@ def balance_handler(token_address: str, wallet_address: str) -> None:
 
     if not wallet.is_wallet_exited():
         printd(msg="Wallet not found, please create wallet first")
-        print("")
-
         quit()
 
     if token_address == "Native token":
@@ -34,4 +32,3 @@ def balance_handler(token_address: str, wallet_address: str) -> None:
     balance = token.get_balance()
     symbol = token.get_symbol()
     printd(msg=balance + " " + symbol)
-    print("")
