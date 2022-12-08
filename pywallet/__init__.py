@@ -1,6 +1,7 @@
 import os
 import json
 from pywallet import constants
+from pywallet.constants import JSON_CONF
 
 default_config = {
     "keypair_path": constants.WALLET_PATH + "/wallet" + "/id.json",
