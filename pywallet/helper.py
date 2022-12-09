@@ -60,6 +60,15 @@ def get_length_of_longest_string_value_in_list_of_dict(list_of_dict : list = [],
     return longest
 
 
+def get_list_of_name_dir_in_folder(folder_path):
+    list_of_dir = os.listdir(folder_path)
+    list_of_name_dir = []
+    for dir in list_of_dir:
+        name_dir = dir.split('.')[0]
+        list_of_name_dir.append(name_dir)
+    return list_of_name_dir
+
+
 def run_bash_complex(target_cmd, custom_name=None):
     """
     complex means some bash commands have piping |, redirect >, etc. that cannot run via run_bash()

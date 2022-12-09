@@ -4,7 +4,7 @@ import os
 from web3 import Web3
 
 from pywallet import helper
-from pywallet.constants import ETH_NATIVE_ADDRESS, ERC20_ABI, HOME_DIR
+from pywallet.constants import ETH_NATIVE_ADDRESS, ERC20_ABI, HOME_DIR, PrintType
 from pywallet.helper import to_checksum_address
 from pywallet.print import printd
 
@@ -90,8 +90,9 @@ class Token(object):
 
 
 class TokenSearch(object):
-    def __init__(self, search_key : str = '') -> None:
+    def __init__(self, search_key : str = '', network=None) -> None:
         self.search_key = search_key
+        self.network = network or 'eth'
 
     def _load_all_json_file(self, path):
         list_token = []
@@ -101,8 +102,18 @@ class TokenSearch(object):
                     list_token.append(json.load(f))
         return list_token
 
+    def _network_is_valid(self):
+        list_network = helper.get_list_of_name_dir_in_folder(f"{HOME_DIR}/tokens")
+        if self.network.lower() not in list_network:
+            return False
+        return True
+
     def search(self, list_token=None) -> list:
-        token_dir = f"{HOME_DIR}/tokens/eth"
+        if not self._network_is_valid():
+            printd(msg=f"Network {self.network} is not valid", type_p=PrintType.ERROR)
+            exit()
+
+        token_dir = f"{HOME_DIR}/tokens/{self.network.lower()}"
         list_token = self._load_all_json_file(token_dir) if list_token is None else list_token
         list_result = []
         for token in list_token:

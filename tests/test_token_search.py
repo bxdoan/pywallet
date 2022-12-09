@@ -18,3 +18,22 @@ class TokenSearchTest(TestCase):
                        'twitter': '', 'youtube': ''}
         }
         assert val_EXPECT in list_tokens
+
+    def test_token_search_w_network(self):
+        list_tokens = TokenSearch(
+            search_key='AAVE',
+            network='bsc'
+        ).search()
+        assert len(list_tokens) == 1
+        val_EXPECT = {
+            'symbol': 'AAVE', 'name': 'Aave', 'type': 'ERC20', 'address': '0xfb6115445Bff7b52FeB98650C87f44907E58f802',
+            'ens_address': '', 'decimals': 18, 'website': '',
+            'logo': {'src': '', 'width': '', 'height': '', 'ipfs_hash': ''},
+            'support': {'email': '', 'url': ''},
+            'social': {
+                'blog': '', 'chat': '', 'discord': '', 'facebook': '', 'forum': '', 'github': '', 'gitter': '',
+                'instagram': '', 'linkedin': '', 'reddit': '', 'slack': '', 'telegram': '', 'twitter': '',
+                'youtube': ''
+            }
+        }
+        assert val_EXPECT in list_tokens
