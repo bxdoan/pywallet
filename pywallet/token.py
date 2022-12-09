@@ -90,7 +90,7 @@ class Token(object):
 
 
 class TokenSearch(object):
-    def __init__(self, search_key) -> None:
+    def __init__(self, search_key : str = '') -> None:
         self.search_key = search_key
 
     def _load_all_json_file(self, path):
@@ -106,6 +106,6 @@ class TokenSearch(object):
         list_token = self._load_all_json_file(token_dir) if list_token is None else list_token
         list_result = []
         for token in list_token:
-            if self.search_key in token["symbol"]:
+            if self.search_key.lower() in token["symbol"].lower() or self.search_key.lower() in token["name"].lower():
                 list_result.append(token)
         return list_result
