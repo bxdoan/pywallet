@@ -19,8 +19,16 @@ echo
 
 echo -e "${GR}Clone PyWallet..${EC}"
 echo -e "${GR}======================================================${EC}"
-git clone https://github.com/bxdoan/pywallet $DIRECTORY
-cd "$SH/$DIRECTORY"
+if [[ -d "$SH/$DIRECTORY" ]]; then
+    echo "$DIRECTORY exists"
+    cd "$SH/$DIRECTORY"
+    git checkout main
+    git pull
+else
+    echo "$DIRECTORY does NOT exists"
+    git clone https://github.com/bxdoan/pywallet $DIRECTORY
+fi
+
 
 echo -e "${GR}Install package..${EC}"
 echo -e "${GR}======================================================${EC}"
@@ -32,6 +40,7 @@ printf "
     ${GR}Email: hi@bxdoan.com${EC}
 
     ${GR}USAGE${EC}
+
 FRIST: cd $SH/$DIRECTORY
 
 1. Create your wallet
