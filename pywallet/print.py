@@ -5,24 +5,24 @@ from pywallet.constants import PrintType
 
 class Print(object):
 
-    def __init__(self, type_print: str = PrintType.INFO, **kwargs) -> None:
-        self.type_print = type_print
+    def __init__(self, type_p: str = PrintType.INFO, **kwargs) -> None:
+        self.type_p = type_p
 
     def _get_color_print(self):
-        if self.type_print == PrintType.ERROR:
+        if self.type_p == PrintType.ERROR:
             return constants.CRED
-        elif self.type_print == PrintType.INFO:
+        elif self.type_p == PrintType.INFO:
             return constants.CCYAN
-        elif self.type_print == PrintType.SUCCESS:
+        elif self.type_p == PrintType.SUCCESS:
             return constants.GRN
-        elif self.type_print == PrintType.WARNING:
+        elif self.type_p == PrintType.WARNING:
             return constants.CYELLOW
         else:
             return constants.WHITE
 
     def _out(self, title: str = '', message: str = '') -> None:
         color_print = self._get_color_print()
-        print_fmt = f'{color_print}{self.type_print.upper()}{constants.CEND} - '
+        print_fmt = f'{color_print}{self.type_p.upper()}{constants.CEND} - '
         if title:
             print_fmt += f'{title} - '
 
@@ -30,8 +30,8 @@ class Print(object):
         print(message, end="\n", flush=True)
 
 
-def printd(msg='', type_print=None) -> None:
-    if type_print:
-        Print(type_print=type_print)._out(message=msg)
+def printd(msg='', type_p=None) -> None:
+    if type_p:
+        Print(type_p=type_p)._out(message=msg)
     else:
         Print()._out(message=msg)

@@ -16,7 +16,7 @@ def get_address():
     wallet = Wallet(config.get_keypair_path())
 
     if not wallet.is_wallet_exited():
-        printd(msg="Wallet not found, please create wallet first", type_print=PrintType.ERROR)
+        printd(msg="Wallet not found, please create wallet first", type_p=PrintType.ERROR)
         quit()
     address = wallet.get_address()
-    printd(msg=address, type_print=PrintType.SUCCESS)
+    printd(msg=address, type_p=PrintType.SUCCESS)

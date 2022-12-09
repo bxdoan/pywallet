@@ -42,7 +42,7 @@ class Wallet(object):
             private_key = Account.decrypt(keypair_encrypted, password)
             return private_key
         except ValueError:
-            printd(msg="Wrong password", type_print=PrintType.ERROR)
+            printd(msg="Wrong password", type_p=PrintType.ERROR)
             exit()
 
     def create_wallet(self, private_key: str, password: str, is_override: bool = False) -> str:
@@ -77,5 +77,5 @@ class Wallet(object):
             self.w3.eth.sendRawTransaction(signed_txn.rawTransaction)
             return signed_txn.hash
         except Exception as e:
-            printd(msg=e, type_print=PrintType.ERROR)
+            printd(msg=e, type_p=PrintType.ERROR)
             return None
