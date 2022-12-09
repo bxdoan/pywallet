@@ -8,7 +8,7 @@ so it can't be hack
 
 (This is a re-write of the original version of PyWallet which is no longer update, still available [here](https://github.com/bui-duc-huy/tartarus-wallet).)
 
-![alt text](./assets/preview.png)
+![alt text](https://raw.githubusercontent.com/bxdoan/pywallet/main/assets/preview.png)
 
 ## Set up
 1. Install package
@@ -38,7 +38,7 @@ chmod 777 ./pywallet.py
 ```
 NOTE:
 By default, we use RPC from alchemy service to get balance and transaction. If you want to use your own url link,
-you can create it from [alchemy](./docs/alchemy.md) and add it to config.json
+you can create it from [alchemy](https://raw.githubusercontent.com/bxdoan/pywallet/main/docs/alchemy.md) and add it to config.json
 ```shell
 config set --url "https://eth-mainnet.g.alchemy.com/v2/qzq9rBJLZpygokkr-JVb0J26UGF6yGKl" --keypair-file "path/to/your/keypair/file"
 ```
@@ -69,6 +69,8 @@ keypair in `~/.pywallet/wallet/id.json`
 
 5. Search TOKEN address
 ```sh
+./pywallet.py search <key_search>
+./pywallet.py search AAVE
 ./pywallet.py search DOGE
 ```
 
