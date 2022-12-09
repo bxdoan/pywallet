@@ -1,8 +1,10 @@
 #! /usr/bin/env python3
+import json
+import os
 from web3 import Web3
 
 from pywallet import helper
-from pywallet.constants import ETH_NATIVE_ADDRESS, ERC20_ABI
+from pywallet.constants import ETH_NATIVE_ADDRESS, ERC20_ABI, HOME_DIR
 from pywallet.helper import to_checksum_address
 from pywallet.print import printd
 
@@ -85,3 +87,25 @@ class Token(object):
             balance = contract.functions.balanceOf(self.checksum_wallet_address).call()
             token_info["balance"] = str(balance / 10 ** int(token_info["decimals"]))
         return token_info
+
+
+class TokenSearch(object):
+    def __init__(self, search_key) -> None:
+        self.search_key = search_key
+
+    def _load_all_json_file(self, path):
+        list_token = []
+        for file in os.listdir(path):
+            if file.endswith(".json"):
+                with open(os.path.join(path, file), "r") as f:
+                    list_token.append(json.load(f))
+        return list_token
+
+    def search(self, list_token=None) -> list:
+        token_dir = f"{HOME_DIR}/tokens/eth"
+        list_token = self._load_all_json_file(token_dir) if list_token is None else list_token
+        list_result = []
+        for token in list_token:
+            if self.search_key in token["symbol"]:
+                list_result.append(token)
+        return list_result
