@@ -3,7 +3,7 @@ web3==5.28.0
 click
 eth-tester
 eth-utils==1.10.0
-py-evm==0.5.0
+py-evm==0.5.0a3
 vyper
 lark
 pytest
