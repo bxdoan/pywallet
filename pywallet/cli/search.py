@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 import click
 from pywallet.constants import PrintType
+from pywallet.helper import get_length_of_longest_string_value_in_list_of_dict
 from pywallet.token import TokenSearch
 from pywallet.print import printd
 
@@ -17,6 +18,6 @@ def search_token(search_key: str) -> None:
         printd(msg="Not found", type_p=PrintType.ERROR)
         quit()
     printd(msg=f"Found {len(list_tokens)} results", type_p=PrintType.SUCCESS)
-
+    longest = get_length_of_longest_string_value_in_list_of_dict(list_tokens, key="symbol")
     for t in list_tokens:
-        printd(msg=f"Name: {t['name']}, Symbol: {t['symbol']}, Address: {t['address']}")
+        printd(msg=f"Address: {t['address']}, Symbol: {t['symbol']:>{longest}}, Name: {t['name']}")

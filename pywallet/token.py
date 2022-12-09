@@ -38,7 +38,7 @@ class Token(object):
         list_balance = []
         for token_address in list_token:
             try:
-                contract = self.w3.eth.contract(address=to_checksum_address(token_address), abi=constants.ERC20_ABI)
+                contract = self.w3.eth.contract(address=to_checksum_address(token_address), abi=ERC20_ABI)
                 balance = contract.functions.balanceOf(self.checksum_wallet_address).call()
                 if not balance:
                     continue

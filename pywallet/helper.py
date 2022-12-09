@@ -52,6 +52,14 @@ def to_checksum_address(address):
     return Web3.toChecksumAddress(address)
 
 
+def get_length_of_longest_string_value_in_list_of_dict(list_of_dict : list = [], key : str = '') -> int:
+    longest = 0
+    for d in list_of_dict:
+        if len(d[key]) > longest:
+            longest = len(d[key])
+    return longest
+
+
 def run_bash_complex(target_cmd, custom_name=None):
     """
     complex means some bash commands have piping |, redirect >, etc. that cannot run via run_bash()
