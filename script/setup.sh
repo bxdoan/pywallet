@@ -32,6 +32,7 @@ printf "
     ${GR}Email: hi@bxdoan.com${EC}
 
     ${GR}USAGE${EC}
+FRIST: cd $SH/$DIRECTORY
 
 1. Create your wallet
     ./pywallet.py create
