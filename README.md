@@ -62,6 +62,11 @@ keypair in `~/.pywallet/wallet/id.json`
 ./pywallet.py balance
 ```
 
+5. Search TOKEN address
+```sh
+./pywallet.py search DOGE
+```
+
 ## Test 
 1. Run test 
 ```sh 

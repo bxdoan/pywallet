@@ -41,6 +41,6 @@ def transfer_handler(receiver: str, amount: float, token_address: str):
     }
     trans_hash = wallet.transfer_token(**transfer_params)
     if trans_hash:
-        printd("Transfer successfully", type_print=PrintType.SUCCESS)
+        printd("Transfer successfully", type_p=PrintType.SUCCESS)
         printd(f"Transaction hash: " + "123")
 

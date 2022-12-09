@@ -27,10 +27,10 @@ class Config(object):
     def set_config(self, url: str, keypair_file: str):
         config = self.config
         if url is not None:
-            printd(msg="URL: " + url, type_print=PrintType.SUCCESS)
+            printd(msg="URL: " + url, type_p=PrintType.SUCCESS)
             config["url"] = url
         if keypair_file is not None:
-            printd(msg="Keypair file: " + keypair_file, type_print=PrintType.SUCCESS)
+            printd(msg="Keypair file: " + keypair_file, type_p=PrintType.SUCCESS)
             config["keypair_path"] = keypair_file
 
         config_path = os.path.join(WALLET_PATH, JSON_CONF)
@@ -38,7 +38,7 @@ class Config(object):
             f.write(json.dumps(config, indent = 4))
 
         return True
-        printd("Config updated", type_print=PrintType.SUCCESS)
+        printd("Config updated", type_p=PrintType.SUCCESS)
 
     def create_default_config(self, path: str) -> None:
         with open(path, "w+") as f:
@@ -65,5 +65,5 @@ class Config(object):
     def print_config(self) -> None:
         keypair_path = self.config["keypair_path"]
         url = self.config["url"]
-        printd(msg="URL: " + url, type_print=PrintType.SUCCESS)
-        printd(msg="Keypair Path" + keypair_path, type_print=PrintType.SUCCESS)
+        printd(msg="URL: " + url, type_p=PrintType.SUCCESS)
+        printd(msg="Keypair Path" + keypair_path, type_p=PrintType.SUCCESS)
