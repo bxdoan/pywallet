@@ -29,9 +29,9 @@ def balance_handler(token_address: str, wallet_address: str) -> None:
 
     token = Token(config.get_url(), wallet_address, token_address)
 
-    # balance = token.get_balance()
+    balance = token.get_balance()
     symbol = token.get_symbol()
-    printd(msg='100' + " " + symbol)
+    printd(msg=balance + " " + symbol)
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
@@ -54,3 +54,4 @@ def balance_all(wallet_address: str) -> None:
             url=config.get_url(),
             wallet_address=wallet_address,
     ).get_balances(config.get_contract_path())
+

@@ -6,7 +6,7 @@ from pywallet.print import printd
 
 default_config = {
     "keypair_path": WALLET_PATH + "/wallet" + "/id.json",
-    "url": "https://mainnet.infura.io/v3/9e4bc49c44c34ac7ae3e5c34fe5e1d62"
+    "url": "https://eth-mainnet.g.alchemy.com/v2/qzq9rBJLZpygokkr-JVb0J26UGF6yGKl"
 }
 
 

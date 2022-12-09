@@ -1,5 +1,7 @@
 #! /usr/bin/env python3
 from web3 import Web3
+
+from pywallet import helper
 from pywallet.constants import ETH_NATIVE_ADDRESS, ERC20_ABI
 from pywallet.helper import to_checksum_address
 from pywallet.print import printd
@@ -29,23 +31,23 @@ class Token(object):
             balance = str(balance / 10 ** self.get_decimal())
         return balance
 
-    # def get_balances(self, contract_path=None) -> list:
-    #     list_token = helper.get_list_of_name_files_without_ext_in_folder(contract_path)
-    #     list_balance = []
-    #     for token_address in list_token:
-    #         try:
-    #             contract = self.w3.eth.contract(address=to_checksum_address(token_address), abi=constants.ERC20_ABI)
-    #             balance = contract.functions.balanceOf(self.checksum_wallet_address).call()
-    #             if not balance:
-    #                 continue
-    #             symbol = contract.functions.symbol().call()
-    #             decimal = contract.functions.decimals().call()
-    #             balance = str(balance / 10 ** decimal)
-    #             printd(msg=f"Balance of {symbol} is {balance}")
-    #             list_balance.append({"symbol": symbol, "balance": balance, 'decimal': decimal})
-    #         except Exception as e:
-    #             pass
-    #     return list_balance
+    def get_balances(self, contract_path=None) -> list:
+        list_token = helper.get_list_of_name_files_without_ext_in_folder(contract_path)
+        list_balance = []
+        for token_address in list_token:
+            try:
+                contract = self.w3.eth.contract(address=to_checksum_address(token_address), abi=constants.ERC20_ABI)
+                balance = contract.functions.balanceOf(self.checksum_wallet_address).call()
+                if not balance:
+                    continue
+                symbol = contract.functions.symbol().call()
+                decimal = contract.functions.decimals().call()
+                balance = str(balance / 10 ** decimal)
+                printd(msg=f"Balance of {symbol} is {balance}")
+                list_balance.append({"symbol": symbol, "balance": balance, 'decimal': decimal})
+            except Exception as e:
+                pass
+        return list_balance
 
     def get_symbol(self) -> str:
         if self.token_address == ETH_NATIVE_ADDRESS:
