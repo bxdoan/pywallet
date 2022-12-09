@@ -1,0 +1,27 @@
+{
+  "symbol": "TCAD",
+  "name": "TrueCAD",
+  "type": "ERC20",
+  "address": "0x00000100F2A2bd000715001920eB70D229700085",
+  "ens_address": "",
+  "decimals": 18,
+  "website": "http://trusttoken.com/",
+  "logo": { "src": "", "width": "", "height": "", "ipfs_hash": "" },
+  "support": { "email": "", "url": "" },
+  "social": {
+    "blog": "",
+    "chat": "",
+    "discord": "",
+    "facebook": "",
+    "forum": "",
+    "github": "",
+    "gitter": "",
+    "instagram": "",
+    "linkedin": "",
+    "reddit": "",
+    "slack": "",
+    "telegram": "",
+    "twitter": "",
+    "youtube": ""
+  }
+}

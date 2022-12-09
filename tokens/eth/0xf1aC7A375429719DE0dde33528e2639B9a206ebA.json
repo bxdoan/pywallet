@@ -1,0 +1,27 @@
+{
+  "symbol": "AMGO",
+  "name": "Arena Match Gold",
+  "type": "ERC20",
+  "address": "0xf1aC7A375429719DE0dde33528e2639B9a206ebA",
+  "ens_address": "",
+  "decimals": 18,
+  "website": "https://arenamatch.com/amg/",
+  "logo": { "src": "", "width": "", "height": "", "ipfs_hash": "" },
+  "support": { "email": "", "url": "" },
+  "social": {
+    "blog": "",
+    "chat": "",
+    "discord": "",
+    "facebook": "",
+    "forum": "",
+    "github": "",
+    "gitter": "",
+    "instagram": "",
+    "linkedin": "",
+    "reddit": "",
+    "slack": "",
+    "telegram": "",
+    "twitter": "",
+    "youtube": ""
+  }
+}

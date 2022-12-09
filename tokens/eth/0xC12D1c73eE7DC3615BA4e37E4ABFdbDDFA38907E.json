@@ -1,0 +1,27 @@
+{
+  "symbol": "KICK",
+  "name": "KickToken",
+  "type": "ERC20",
+  "address": "0xC12D1c73eE7DC3615BA4e37E4ABFdbDDFA38907E",
+  "ens_address": "",
+  "decimals": 8,
+  "website": "https://kickecosystem.com/",
+  "logo": { "src": "", "width": "", "height": "", "ipfs_hash": "" },
+  "support": { "email": "", "url": "" },
+  "social": {
+    "blog": "",
+    "chat": "",
+    "discord": "",
+    "facebook": "",
+    "forum": "",
+    "github": "",
+    "gitter": "",
+    "instagram": "",
+    "linkedin": "",
+    "reddit": "",
+    "slack": "",
+    "telegram": "",
+    "twitter": "",
+    "youtube": ""
+  }
+}

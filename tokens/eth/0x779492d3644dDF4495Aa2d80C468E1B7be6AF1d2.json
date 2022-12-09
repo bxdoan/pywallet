@@ -1,0 +1,27 @@
+{
+  "symbol": "CAS",
+  "name": "CAS Coin",
+  "type": "ERC20",
+  "address": "0x779492d3644dDF4495Aa2d80C468E1B7be6AF1d2",
+  "ens_address": "",
+  "decimals": 2,
+  "website": "",
+  "logo": { "src": "", "width": "", "height": "", "ipfs_hash": "" },
+  "support": { "email": "", "url": "" },
+  "social": {
+    "blog": "",
+    "chat": "",
+    "discord": "",
+    "facebook": "",
+    "forum": "",
+    "github": "",
+    "gitter": "",
+    "instagram": "",
+    "linkedin": "",
+    "reddit": "",
+    "slack": "",
+    "telegram": "",
+    "twitter": "",
+    "youtube": ""
+  }
+}
