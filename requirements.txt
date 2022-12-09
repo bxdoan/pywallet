@@ -2,7 +2,7 @@ eth_account==0.5.7
 web3==5.28.0
 click
 eth-tester
-eth-utils
+eth-utils==1.10.0
 py-evm
 vyper
 lark
