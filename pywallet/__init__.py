@@ -1,24 +1,18 @@
 import os
 import json
-from pywallet import constants
-from pywallet.constants import JSON_CONF
-
-default_config = {
-    "keypair_path": constants.WALLET_PATH + "/wallet" + "/id.json",
-    "url": "https://mainnet.infura.io/v3/9e4bc49c44c34ac7ae3e5c34fe5e1d62"
-}
+from pywallet.constants import JSON_CONF, DEFAULT_CONFIG, WALLET_PATH, WALLET_LIST_PATH
 
 
 def set_up():
-    if not os.path.exists(constants.WALLET_PATH):
-        os.makedirs(constants.WALLET_PATH)
+    if not os.path.exists(WALLET_PATH):
+        os.makedirs(WALLET_PATH)
 
-        config_path = os.path.join(constants.WALLET_PATH, JSON_CONF)
+        config_path = os.path.join(WALLET_PATH, JSON_CONF)
         with open(config_path, "w+") as f:
-            f.write(json.dumps(default_config, indent = 4))
+            f.write(json.dumps(DEFAULT_CONFIG, indent = 4))
 
-    if not os.path.exists(constants.WALLET_LIST_PATH):
-        os.makedirs(constants.WALLET_LIST_PATH)
+    if not os.path.exists(WALLET_LIST_PATH):
+        os.makedirs(WALLET_LIST_PATH)
 
 
 set_up()

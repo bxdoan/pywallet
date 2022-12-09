@@ -14,7 +14,7 @@ from pywallet.wallet import Wallet
 @click.argument("amount", type=float)
 @click.option('-t', '--token-address', 'token_address', help="Token Address", default="Native token", show_default=True)
 def transfer_handler(receiver: str, amount: float, token_address: str):
-    """transfer for wallet\n
+    """Transfer for wallet\n
     transfer <receiver> <amount>\n
     transfer <receiver> <amount> -t <token-address>\n
     """

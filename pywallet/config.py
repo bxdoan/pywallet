@@ -1,13 +1,8 @@
 #! /usr/bin/env python3
 import os
 import json
-from pywallet.constants import JSON_CONF, WALLET_PATH, PrintType
+from pywallet.constants import JSON_CONF, WALLET_PATH, PrintType, DEFAULT_CONFIG
 from pywallet.print import printd
-
-default_config = {
-    "keypair_path": WALLET_PATH + "/wallet" + "/id.json",
-    "url": "https://eth-mainnet.g.alchemy.com/v2/qzq9rBJLZpygokkr-JVb0J26UGF6yGKl"
-}
 
 
 class Config(object):
@@ -42,7 +37,7 @@ class Config(object):
 
     def create_default_config(self, path: str) -> None:
         with open(path, "w+") as f:
-            f.write(json.dumps(default_config, indent = 4))
+            f.write(json.dumps(DEFAULT_CONFIG, indent = 4))
 
     def check_config_exited(self) -> None:
         config_path = os.path.join(WALLET_PATH, JSON_CONF)
@@ -59,8 +54,8 @@ class Config(object):
     def get_keypair_path(self) -> str:
         return self.config["keypair_path"]
 
-    def get_url(self) -> str:
-        return self.config["url"]
+    def get_url(self, network : str = "eth") -> str:
+        return self.config["url"][network]
 
     def print_config(self) -> None:
         keypair_path = self.config["keypair_path"]

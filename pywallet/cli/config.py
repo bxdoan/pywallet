@@ -37,7 +37,7 @@ def set_config(url: str, keypair_file: str):
 
 @click.group()
 def config_command():
-    f"""Config for wallet\n"""
+    """Config for wallet"""
     pass
 
 

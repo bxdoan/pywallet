@@ -11,7 +11,7 @@ from pywallet.token import Token
 @click.option('-w', '--wallet-address', 'wallet_address', help="Wallet address", default="", show_default=False)
 @click.option('-t', '--token-address', 'token_address', help="Token address", default="Native token", show_default=True)
 def balance_handler(token_address: str, wallet_address: str) -> None:
-    f"""Get balance\n
+    """Get balance\n
     balance -t <token_address> -w <wallet_address>
     """
     config = Config()
@@ -37,7 +37,7 @@ def balance_handler(token_address: str, wallet_address: str) -> None:
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 @click.option('-w', '--wallet-address', 'wallet_address', help="Wallet address", default="", show_default=False)
 def balance_all(wallet_address: str) -> None:
-    f"""Get balance\n
+    """Get balance all token\n
     balance -t <token_address> -w <wallet_address>
     """
     config = Config()
