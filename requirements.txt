@@ -1,10 +1,10 @@
 eth_account==0.5.7
 web3==5.28.0
 click
-pytest
-flake8
 eth-tester
 eth-utils
 py-evm
 vyper
 lark
+pytest
+flake8

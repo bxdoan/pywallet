@@ -32,10 +32,10 @@ chmod 777 ./pywallet.py
 ./pywallet.py
 ```
 NOTE:
-By default, we use RPC from infura service to get balance and transaction. If you want to use your own node, you
-can change config file
+By default, we use RPC from alchemy service to get balance and transaction. If you want to use your own url link,
+you can create it from [alchemy](./docs/alchemy.md) and add it to config.json
 ```shell
-config set --url "https://mainnet.infura.io/v3/your_api_key" --keypair-file "path/to/your/keypair/file"
+config set --url "https://eth-mainnet.g.alchemy.com/v2/qzq9rBJLZpygokkr-JVb0J26UGF6yGKl" --keypair-file "path/to/your/keypair/file"
 ```
 
 If you not have wallet, it will create new wallet and save to file *.json by command
@@ -78,4 +78,3 @@ or
 2. Refactor code
 
 ## Thanks for use
-Donate ♥ to support me
