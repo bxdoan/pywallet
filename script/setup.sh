@@ -41,7 +41,7 @@ printf "
 
     ${GR}USAGE${EC}
 
-FRIST: cd $SH/$DIRECTORY
+${HL}FRIST: cd $SH/$DIRECTORY
 
 1. Create your wallet
     ./pywallet.py create
@@ -63,5 +63,5 @@ FRIST: cd $SH/$DIRECTORY
     ./pywallet.py search <key_search>
     ./pywallet.py search AAVE
     ./pywallet.py search DOGE
-
+${EC}
 "
