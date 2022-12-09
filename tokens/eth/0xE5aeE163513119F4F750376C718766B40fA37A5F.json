@@ -1,0 +1,27 @@
+{
+  "symbol": "FZ",
+  "name": "Frozencoin Network",
+  "type": "ERC20",
+  "address": "0xE5aeE163513119F4F750376C718766B40fA37A5F",
+  "ens_address": "",
+  "decimals": 18,
+  "website": "https://fzcoin.cc/",
+  "logo": { "src": "", "width": "", "height": "", "ipfs_hash": "" },
+  "support": { "email": "", "url": "" },
+  "social": {
+    "blog": "",
+    "chat": "",
+    "discord": "",
+    "facebook": "",
+    "forum": "",
+    "github": "",
+    "gitter": "",
+    "instagram": "",
+    "linkedin": "",
+    "reddit": "",
+    "slack": "",
+    "telegram": "",
+    "twitter": "",
+    "youtube": ""
+  }
+}

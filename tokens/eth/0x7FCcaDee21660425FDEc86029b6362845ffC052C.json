@@ -1,0 +1,27 @@
+{
+  "symbol": "HIN",
+  "name": "TimeBanking",
+  "type": "ERC20",
+  "address": "0x7FCcaDee21660425FDEc86029b6362845ffC052C",
+  "ens_address": "",
+  "decimals": 8,
+  "website": "",
+  "logo": { "src": "", "width": "", "height": "", "ipfs_hash": "" },
+  "support": { "email": "", "url": "" },
+  "social": {
+    "blog": "",
+    "chat": "",
+    "discord": "",
+    "facebook": "",
+    "forum": "",
+    "github": "",
+    "gitter": "",
+    "instagram": "",
+    "linkedin": "",
+    "reddit": "",
+    "slack": "",
+    "telegram": "",
+    "twitter": "",
+    "youtube": ""
+  }
+}

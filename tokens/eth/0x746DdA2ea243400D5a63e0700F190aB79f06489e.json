@@ -1,0 +1,27 @@
+{
+  "symbol": "BOA",
+  "name": "BOSAGORA",
+  "type": "ERC20",
+  "address": "0x746DdA2ea243400D5a63e0700F190aB79f06489e",
+  "ens_address": "",
+  "decimals": 7,
+  "website": "https://www.bosagora.io/",
+  "logo": { "src": "", "width": "", "height": "", "ipfs_hash": "" },
+  "support": { "email": "", "url": "" },
+  "social": {
+    "blog": "",
+    "chat": "",
+    "discord": "",
+    "facebook": "",
+    "forum": "",
+    "github": "",
+    "gitter": "",
+    "instagram": "",
+    "linkedin": "",
+    "reddit": "",
+    "slack": "",
+    "telegram": "",
+    "twitter": "",
+    "youtube": ""
+  }
+}

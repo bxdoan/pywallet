@@ -1,0 +1,27 @@
+{
+  "symbol": "PENCB",
+  "name": "Sol Peruano PagoLinea",
+  "type": "ERC20",
+  "address": "0x0F6895Fa2679453D2C32C5F6E2f00E4621c57CA2",
+  "ens_address": "",
+  "decimals": 18,
+  "website": "",
+  "logo": { "src": "", "width": "", "height": "", "ipfs_hash": "" },
+  "support": { "email": "", "url": "" },
+  "social": {
+    "blog": "",
+    "chat": "",
+    "discord": "",
+    "facebook": "",
+    "forum": "",
+    "github": "",
+    "gitter": "",
+    "instagram": "",
+    "linkedin": "",
+    "reddit": "",
+    "slack": "",
+    "telegram": "",
+    "twitter": "",
+    "youtube": ""
+  }
+}
