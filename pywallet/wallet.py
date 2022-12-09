@@ -4,8 +4,7 @@ from eth_account import Account
 import secrets
 import json
 from web3 import Web3
-from pywallet import config, constants, helper
-from pywallet.constants import ETH_NATIVE_ADDRESS, ERC20_ABI, PrintType
+from pywallet.constants import ERC20_ABI, PrintType
 from pywallet.helper import to_checksum_address
 from pywallet.print import printd
 

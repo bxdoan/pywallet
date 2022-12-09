@@ -7,7 +7,7 @@ from pywallet.cli.address import get_address
 from pywallet.cli.create import create_wallet
 from pywallet.cli.tornado import tornado_command
 from pywallet.cli.transfer import transfer_handler
-from pywallet.cli.balance import balance_handler
+from pywallet.cli.balance import balance_handler, balance_all
 
 __version__ = "0.1.0"
 
@@ -16,8 +16,9 @@ __version__ = "0.1.0"
 @click.version_option(version = __version__)
 @click.pass_context
 def cli(ctx):
-    """
+    f"""
     PyWallet: Micro wallet by BXDOAN
+    Version: {__version__}
     Email: hi@bxdoan.com
     """
     pass
@@ -29,3 +30,4 @@ cli.add_command(create_wallet, "create")
 cli.add_command(tornado_command, "tornado")
 cli.add_command(transfer_handler, "transfer")
 cli.add_command(balance_handler, "balance")
+cli.add_command(balance_all, "balance-all")

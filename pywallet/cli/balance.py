@@ -29,6 +29,28 @@ def balance_handler(token_address: str, wallet_address: str) -> None:
 
     token = Token(config.get_url(), wallet_address, token_address)
 
-    balance = token.get_balance()
+    # balance = token.get_balance()
     symbol = token.get_symbol()
-    printd(msg=balance + " " + symbol)
+    printd(msg='100' + " " + symbol)
+
+
+@click.command(context_settings=dict(help_option_names=['-h', '--help']))
+@click.option('-w', '--wallet-address', 'wallet_address', help="Wallet address", default="", show_default=False)
+def balance_all(wallet_address: str) -> None:
+    f"""Get balance\n
+    balance -t <token_address> -w <wallet_address>
+    """
+    config = Config()
+    wallet = Wallet(config.get_keypair_path())
+
+    if not wallet.is_wallet_exited():
+        printd(msg="Wallet not found, please create wallet first")
+        quit()
+
+    if wallet_address == "":
+        wallet_address = wallet.get_address()
+
+    Token(
+            url=config.get_url(),
+            wallet_address=wallet_address,
+    ).get_balances(config.get_contract_path())

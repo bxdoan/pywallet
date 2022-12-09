@@ -1,15 +1,10 @@
 #!/usr/bin/env python3
-
-import sys, time, os
-from os import walk
-from eth_account import Account
-import json
+import os
+import sys
+import time
+import subprocess
 from web3 import Web3
-import web3
-from .constants import *
-
-provider = Web3.HTTPProvider('https://mainnet.infura.io/v3/9e4bc49c44c34ac7ae3e5c34fe5e1d62')
-w3 = Web3(provider)
+from pywallet.constants import TMP_DIR
 
 
 def type_writer(message, delay_time):
@@ -21,80 +16,70 @@ def type_writer(message, delay_time):
     time.sleep(0.1)
 
 
-def create_new_key(private_key, password):
-    account = Account.from_key(private_key)
-    encrypted_key = Account.encrypt(private_key, password = password)
-
-    json_object = json.dumps(encrypted_key, indent = 4)
-
-    with open(".keypair" + ".json", "w") as outfile:
-        outfile.write(json_object)
+def get_filename_from_path(path):
+    return os.path.basename(path)
 
 
-def decrypt_wallet(wallet, password):
-    decrypt_key = Account.decrypt(wallet, password)
-    return decrypt_key
+def get_list_of_files_in_folder(folder_path):
+    return os.listdir(folder_path)
 
 
-def get_wallet_encrypt():
-    with open(".keypair.json", 'r') as openfile:
-        wallet = json.load(openfile)
-    return wallet
+# get list of name files without ext in folder
+def get_list_of_name_files_without_ext_in_folder(folder_path):
+    list_of_files = get_list_of_files_in_folder(folder_path)
+    list_of_name_files = []
+    for file in list_of_files:
+        name_file = file.split('.')[0]
+        list_of_name_files.append(name_file)
+    return list_of_name_files
 
 
-def get_wallet_by_index(index):
-    wallets = get_wallets_list()
-    return wallets[index - 1]
+def run_bash(cmd : str = '') -> tuple:
+    # mix stdout and stderr into a single string ref. https://stackoverflow.com/a/41172862/248616
+    sp  = subprocess.run(cmd.split(' '), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    r   = sp.stdout.decode('utf-8')
+    err = sp.returncode
+    return r, err
+
+
+def halt_if_run_bash_failed(run_bash_result):
+    output_text, error_code = run_bash_result
+    if error_code != 0 :
+        raise Exception(f'Failed run_bash()\nError:\n{output_text}')
 
 
 def to_checksum_address(address):
     return Web3.toChecksumAddress(address)
 
 
-def get_token_info(wallet_address, token_address):
-    token_info = {}
+def run_bash_complex(target_cmd, custom_name=None):
+    """
+    complex means some bash commands have piping |, redirect >, etc. that cannot run via run_bash()
+    we will right the :target_cmd,
+    i.e the complex bash command, to a bash file and run it
+    """
+    if custom_name is None:
+        custom_name = hash(target_cmd)
 
-    if len(token_address) == 0:
-        token_info["address"] = ETH_NATIVE_ADDRESS
-        token_info["name"] = "Ethereum"
-        token_info["symbol"] = "ETH"
-        token_info["decimals"] = "18"
-        token_info["balance"] = str(float(w3.eth.get_balance(wallet_address)) / 10 ** 18)
+    # prepare :sh_file to store :target_cmd
+    sh_file_dir = f'{TMP_DIR}/run_bash_complex'
+    sh_file     = f'{sh_file_dir}/{custom_name}.sh'  # sh file stored here
 
-    else:
-        token = w3.eth.contract(address=to_checksum_address(token_address), abi=ERC20_ABI)
+    os.makedirs(sh_file_dir, exist_ok=True)  # prepare folder path
 
-        token_info["address"] = token_address
-        token_info["name"] = str(token.functions.name().call())
-        token_info["symbol"] = str(token.functions.symbol().call())
-        token_info["decimals"] = str(token.functions.decimals().call())
-        token_info["balance"] = str(token.functions.balanceOf(wallet_address).call() / 10 ** int(token_info["decimals"]))
+    # write :target_cmd to .sh file
+    with open(sh_file, 'w') as f:
+        f.write(
+            f'#!/bin/bash\n'
+            f'{target_cmd} | tee {sh_file}.log'
+        )
 
-    return token_info
+    # add +x permission to it
+    _ = run_bash(f'chmod +x {sh_file}')
+    halt_if_run_bash_failed(_)
 
-def transfer_token(token_info, address, private_key, receiver_address, amount):
-    token = w3.eth.contract(address=to_checksum_address(token_info["address"]), abi=ERC20_ABI)
-    amount = int(amount * (10 ** int(token_info["decimals"])))
-    nonce = w3.eth.getTransactionCount(address)
-
-    transaction = token.functions.transfer(to_checksum_address(receiver_address), amount).buildTransaction({'nonce': nonce, 'gas': 70000, 'gasPrice': w3.toWei('10', 'gwei'),})
-
-    signed_txn = w3.eth.account.signTransaction(transaction, private_key=private_key)
-    w3.eth.sendRawTransaction(signed_txn.rawTransaction)
-
-    return signed_txn.hash
-
-def transfer_eth(address, private_key, receiver_address, amount):
-    nonce = w3.eth.getTransactionCount(address)
-    tx = {
-        'nonce': nonce,
-        'to': to_checksum_address(receiver_address),
-        'value': w3.toWei(amount, 'ether'),
-        'gas': 2000000,
-        'gasPrice': w3.toWei('10', 'gwei')
-    }
-
-    signed_tx = w3.eth.account.sign_transaction(tx, private_key)
-    tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-
-    return tx_hash
+    # run the created .sh file
+    assert os.path.isfile(sh_file)
+    _ = run_bash(sh_file)
+    halt_if_run_bash_failed(_)
+    return _

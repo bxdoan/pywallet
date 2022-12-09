@@ -5,6 +5,7 @@ from enum import EnumMeta, Enum
 WALLET_FOLDER = ".pywallet"
 WALLET_PATH = os.path.join(os.path.expanduser('~'), WALLET_FOLDER)
 HOME_DIR = f"{os.path.dirname(os.path.realpath(__file__))}/.."
+TMP_DIR = f"/tmp"
 WALLET_LIST_PATH = os.path.join(WALLET_PATH, "wallet")
 JSON_CONF = "config.json"
 # Defining the colors of the text in bash

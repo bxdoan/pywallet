@@ -23,10 +23,15 @@ def transfer_handler(receiver: str, amount: float, token_address: str):
     if token_address == "Native token":
         token_address = ETH_NATIVE_ADDRESS
 
-    token = Token(config['url'], wallet.get_address(), token_address)
+    token = Token(url=config['url'], wallet_address=wallet.get_address(), token_address=token_address)
 
     printd("Password: ")
     password = getpass("")
+
+    balance = token.get_balance()
+    symbol = token.get_symbol()
+    printd(msg=balance + " " + symbol)
+    printd(msg="Transferring...")
 
     transfer_params = {
         'token_info': token.get_token_info(),
@@ -37,4 +42,5 @@ def transfer_handler(receiver: str, amount: float, token_address: str):
     trans_hash = wallet.transfer_token(**transfer_params)
     if trans_hash:
         printd("Transfer successfully", type_print=PrintType.SUCCESS)
-        printd(f"Transaction hash" + trans_hash)
+        printd(f"Transaction hash: " + "123")
+

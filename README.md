@@ -8,7 +8,7 @@ so it can't be hack
 
 (This is a re-write of the original version of PyWallet which is no longer update, still available [here](https://github.com/bui-duc-huy/tartarus-wallet).)
 
-![alt text](./assets/preview.jpg)
+![alt text](./assets/preview.png)
 
 ## Set up
 1. Install package
@@ -29,7 +29,7 @@ chmod 777 ./pywallet.py
 ## Usage
 1. Run app
 ```sh
-./wallet.py
+./pywallet.py
 ```
 NOTE:
 By default, we use RPC from infura service to get balance and transaction. If you want to use your own node, you
@@ -40,24 +40,26 @@ config set --url "https://mainnet.infura.io/v3/your_api_key" --keypair-file "pat
 
 If you not have wallet, it will create new wallet and save to file *.json by command
 ```sh
- create --force
+./pywallet.py create
 ```
 You can change url and keypair_path for your own config in `~/.pywallet/config.json` and view your wallet 
 keypair in `~/.pywallet/wallet/id.json`
 
 2. Get wallet address
 ```sh
->> address
+./pywallet.py address
 ```
 
 3. Transfer Token
 ```sh
->> transfer
+./pywallet.py transfer <reicever> <amount>
+
+./pywallet.py transfer <reicever> <amount> -t <token_address>
 ```
 
-4. Reset wallet
+4. Get balance
 ```sh
->> reset
+./pywallet.py balance
 ```
 
 ## Test 
@@ -76,4 +78,4 @@ or
 2. Refactor code
 
 ## Thanks for use
-Donate ♥
+Donate ♥ to support me
