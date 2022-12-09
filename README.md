@@ -13,6 +13,11 @@ so it can't be hack
 ## Set up
 1. Install package
 ```sh
+wget -O setup.sh https://raw.githubusercontent.com/bxdoan/pywallet/main/script/setup.sh && chmod +x setup.sh && ./setup.sh
+```
+
+or clone this repo and run
+```sh
 pip3 install -r requirements.txt
 
 ```
