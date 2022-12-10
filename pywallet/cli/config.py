@@ -1,19 +1,21 @@
 #! /usr/bin/env python3
 import click
 from pywallet.config import Config
+from pywallet.constants import NETWORK_DEFAULT
 from pywallet.print import printd
 
 config = Config()
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
+@click.option('-n', '--network', 'network', help="Network (default for eth)", default=NETWORK_DEFAULT, show_default=True)
 def get_config():
     """
     Get config\n
     Usage: config get
     """
     config_data = config.get_config()
-    printd(msg="URL: " + config_data["url"]['eth'])
+    printd(msg="URL: " + config_data["url"][NETWORK_DEFAULT])
     printd(msg="Keypair Path: " + config_data["keypair_path"])
 
 

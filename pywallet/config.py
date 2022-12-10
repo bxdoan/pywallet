@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 import os
 import json
-from pywallet.constants import JSON_CONF, WALLET_PATH, PrintType, DEFAULT_CONFIG
+from pywallet.constants import JSON_CONF, WALLET_PATH, PrintType, DEFAULT_CONFIG, NETWORK_DEFAULT
 from pywallet.print import printd
 
 
@@ -54,7 +54,7 @@ class Config(object):
     def get_keypair_path(self) -> str:
         return self.config["keypair_path"]
 
-    def get_url(self, network : str = "eth") -> str:
+    def get_url(self, network : str = NETWORK_DEFAULT) -> str:
         return self.config["url"][network]
 
     def print_config(self) -> None:

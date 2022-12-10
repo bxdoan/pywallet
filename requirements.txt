@@ -9,3 +9,4 @@ vyper
 lark
 pytest
 flake8
+python-dotenv

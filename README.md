@@ -19,11 +19,12 @@ wget -O setup.sh https://raw.githubusercontent.com/bxdoan/pywallet/main/script/s
 or clone this repo and run
 ```sh
 pip3 install -r requirements.txt
-
+cp .env.sample .env
 ```
 or using pipenv
 ```sh
 pipenv sync
+cp .env.sample .env
 ```
 
 2. Execute mod for wallet.py

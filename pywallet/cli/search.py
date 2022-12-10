@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 import click
-from pywallet.constants import PrintType
+from pywallet.constants import PrintType, NETWORK_DEFAULT
 from pywallet import helper
 from pywallet.token import TokenSearch
 from pywallet.print import printd
@@ -8,7 +8,7 @@ from pywallet.print import printd
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 @click.argument("search_key", type=str)
-@click.option('-n', '--network', 'network', help="Network (default for eth)", default="eth", show_default=True)
+@click.option('-n', '--network', 'network', help="Network (default for eth)", default=NETWORK_DEFAULT, show_default=True)
 def search_token(search_key: str, network : str) -> None:
     """
     Search token information by search key\n

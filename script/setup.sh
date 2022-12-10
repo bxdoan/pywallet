@@ -33,7 +33,7 @@ fi
 echo -e "${GR}Install package..${EC}"
 echo -e "${GR}======================================================${EC}"
 pip3 install -r requirements.txt
-
+cp .env.sample .env
 
 printf "
     ${GR}PyWallet: Micro wallet by bxdoan${EC}

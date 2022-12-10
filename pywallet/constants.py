@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 import os
 from enum import EnumMeta, Enum
+from dotenv import load_dotenv
+
+load_dotenv()
 
 WALLET_FOLDER = ".pywallet"
 WALLET_PATH = os.path.join(os.path.expanduser('~'), WALLET_FOLDER)
 HOME_DIR = f"{os.path.dirname(os.path.realpath(__file__))}/.."
 TMP_DIR = f"/tmp"
 WALLET_LIST_PATH = os.path.join(WALLET_PATH, "wallet")
+NETWORK_DEFAULT = os.environ.get('network', 'eth')
+
 JSON_CONF = "config.json"
 # Defining the colors of the text in bash
 CBLINK = '\033[5m'
