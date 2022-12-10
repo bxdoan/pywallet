@@ -43,12 +43,12 @@ read -p $'\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]\e[1;93m Choose an option: \e[1
 
 if [[ $option == 1 || $option == 01 ]]; then
 	printf "\n\e[1;92m This process will take a few moments ...\n\n\e[1;92m"
-	python3 ./pywallet.py address
+  ./pywallet.py address
 	script
 
 elif [[ $option == 2 || $option == 02 ]]; then
 	printf "\n\e[1;92m Please wait ...\n\n\e[1;92m"
-	python3 ./pywallet.py balance
+	./pywallet.py balance
 	script
 
 elif [[ $option == 3 || $option == 03 ]]; then
@@ -62,7 +62,7 @@ ${EC}
 
 	if [[ $optionconfig == 1 || $optionconfig == 01 ]]; then
     printf "\n\e[1;92m Please wait ...\n\n\e[1;92m"
-    python3 ./pywallet.py config get
+    ./pywallet.py config get
     script
   elif [[ $optionconfig == 2 || $optionconfig == 02 ]]; then
     printf "\nEnter url (None for using default)...\n"
