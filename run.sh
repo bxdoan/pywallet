@@ -32,9 +32,10 @@ printf "${GR}
 [1] address      Get your wallet address
 [2] balance      Get balance
 [3] config       Config for wallet
-[4] create       Create new keypair
-[5] search       Search token information by search key
-[6] transfer     Transfer for wallet
+[4] network      Config network for wallet
+[5] create       Create new keypair
+[6] search       Search token information by search key
+[7] transfer     Transfer for wallet
 [0] exit         Exit
 ${EC}
 "
@@ -86,11 +87,32 @@ ${EC}
 	script
 
 elif [[ $option == 4 || $option == 04 ]]; then
+	printf "${GR}\nWhat do you want get config or set config ?\n
+[1] get  Get network config
+[2] set  Set network config
+[0] exit Exit
+${EC}
+"
+	read -p $'\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]\e[1;93m Choose an option: \e[1;92m' optionconfig
+	if [[ $optionconfig == 1 || $optionconfig == 01 ]]; then
+    printf "\n\e[1;92m Please wait ...\n\n\e[1;92m"
+    ./pywallet.py network get
+    script
+  elif [[ $optionconfig == 2 || $optionconfig == 02 ]]; then
+    printf "\nEnter network (None for using eth)...\n"
+	  read -p $'\n\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]\e[1;93m Enter network: \e[1;92m' network
+    python3 ./pywallet.py network set --network $network
+    script
+  else
+    script
+  fi
+
+elif [[ $option == 5 || $option == 05 ]]; then
 	printf "\n\e[1;92m Please wait ...\n\n\e[1;92m"
 	python3 ./pywallet.py create
 	script
 
-elif [[ $option == 5 || $option == 05 ]]; then
+elif [[ $option == 6 || $option == 06 ]]; then
 	printf "\n\nEnter search key ...\n"
 	read -p $'\n\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]\e[1;93m Enter search key: \e[1;92m' key_search
 
@@ -103,7 +125,7 @@ elif [[ $option == 5 || $option == 05 ]]; then
 	python3 ./pywallet.py search "$key_search" -n $network
 	script
 
-elif [[ $option == 6 || $option == 06 ]]; then
+elif [[ $option == 7|| $option == 07 ]]; then
 	printf "\nEnter receiver address ...\n"
 	read -p $'\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]\e[1;93m Enter address: \e[1;92m' reicever
 

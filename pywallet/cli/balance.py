@@ -10,7 +10,8 @@ from pywallet.token import Token
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 @click.option('-w', '--wallet-address', 'wallet_address', help="Wallet address", default="", show_default=False)
 @click.option('-t', '--token-address', 'token_address', help="Token address", default="Native token", show_default=True)
-def balance_handler(token_address: str, wallet_address: str) -> None:
+@click.option('-n', '--network', 'network', help="Network (default for eth)", default='', show_default=True)
+def balance_handler(token_address : str, wallet_address : str, network : str) -> None:
     """Get balance\n
     balance -t <token_address> -w <wallet_address>
     """
@@ -27,7 +28,7 @@ def balance_handler(token_address: str, wallet_address: str) -> None:
     if wallet_address == "":
         wallet_address = wallet.get_address()
 
-    token = Token(config.get_url(), wallet_address, token_address)
+    token = Token(config.get_url(network), wallet_address, token_address)
 
     balance = token.get_balance()
     symbol = token.get_symbol()

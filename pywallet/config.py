@@ -19,11 +19,14 @@ class Config(object):
     def get_config(self):
         return self.config
 
-    def set_config(self, url: str, keypair_file: str):
+    def set_config(self, url: str = None, keypair_file: str = None, network: str = None) -> bool:
         config = self.config
         if url is not None:
             printd(msg="URL: " + url, type_p=PrintType.SUCCESS)
-            config["url"] = url
+            config["url"][network] = url
+        if network is not None:
+            printd(msg="Network: " + network, type_p=PrintType.SUCCESS)
+            config["network"] = network
         if keypair_file is not None:
             printd(msg="Keypair file: " + keypair_file, type_p=PrintType.SUCCESS)
             config["keypair_path"] = keypair_file
@@ -31,9 +34,8 @@ class Config(object):
         config_path = os.path.join(WALLET_PATH, JSON_CONF)
         with open(config_path, "w+") as f:
             f.write(json.dumps(config, indent = 4))
-
-        return True
         printd("Config updated", type_p=PrintType.SUCCESS)
+        return True
 
     def create_default_config(self, path: str) -> None:
         with open(path, "w+") as f:
@@ -54,8 +56,13 @@ class Config(object):
     def get_keypair_path(self) -> str:
         return self.config["keypair_path"]
 
-    def get_url(self, network : str = NETWORK_DEFAULT) -> str:
+    def get_url(self, network : str = None) -> str:
+        if not network:
+            network = self.config['network']
         return self.config["url"][network]
+
+    def get_network(self) -> str:
+        return self.config['network']
 
     def print_config(self) -> None:
         keypair_path = self.config["keypair_path"]

@@ -3,6 +3,7 @@
 import click
 
 from pywallet.cli.config import config_command
+from pywallet.cli.network import network_command
 from pywallet.cli.address import get_address
 from pywallet.cli.create import create_wallet
 from pywallet.cli.search import search_token
@@ -26,6 +27,7 @@ def cli(ctx):
 
 
 cli.add_command(config_command, "config")
+cli.add_command(network_command, "network")
 cli.add_command(get_address, "address")
 cli.add_command(search_token, "search")
 cli.add_command(create_wallet, "create")

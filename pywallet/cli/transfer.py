@@ -13,7 +13,7 @@ from pywallet.wallet import Wallet
 @click.argument("receiver", type=str)
 @click.argument("amount", type=float)
 @click.option('-t', '--token-address', 'token_address', help="Token Address", default="Native token", show_default=True)
-@click.option('-n', '--network', 'network', help="Network (default for eth)", default=NETWORK_DEFAULT, show_default=True)
+@click.option('-n', '--network', 'network', help="Network (default for eth)", default='', show_default=True)
 def transfer_handler(receiver: str, amount: float, token_address: str, network: str) -> None:
     """Transfer for wallet\n
     transfer <receiver> <amount>\n
@@ -23,6 +23,9 @@ def transfer_handler(receiver: str, amount: float, token_address: str, network: 
     wallet = Wallet(**config)
     if token_address == "Native token":
         token_address = ETH_NATIVE_ADDRESS
+
+    if not network:
+        network = config["network"]
 
     token = Token(url=config['url'][network], wallet_address=wallet.get_address(), token_address=token_address)
 

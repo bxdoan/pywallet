@@ -8,21 +8,24 @@ config = Config()
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
-@click.option('-n', '--network', 'network', help="Network (default for eth)", default=NETWORK_DEFAULT, show_default=True)
-def get_config():
+@click.option('-n', '--network', 'network', help="Network (default for eth)", default='', show_default=True)
+def get_config(network: str) -> None:
     """
     Get config\n
     Usage: config get
     """
     config_data = config.get_config()
-    printd(msg="URL: " + config_data["url"][NETWORK_DEFAULT])
+    if not network:
+        network = config_data["network"]
+    printd(msg="Network: " + network)
+    printd(msg="URL: " + config_data["url"][network])
     printd(msg="Keypair Path: " + config_data["keypair_path"])
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 @click.option('-u', '--url', 'url', help="RPC URL")
 @click.option('-k', '--keypair-file', 'keypair_file', help="Keypair file name")
-def set_config(url: str, keypair_file: str):
+def set_config(url: str, keypair_file: str, network: str) -> None:
     """
     Set config\n
     Usage: config set -u <url> -k <keypair_file>
@@ -31,7 +34,7 @@ def set_config(url: str, keypair_file: str):
         with click.Context(set_config) as ctx:
             click.echo(set_config.get_help(ctx))
     else:
-        success = config.set_config(url, keypair_file)
+        success = config.set_config(url=url, keypair_file=keypair_file)
 
         if success:
             printd(msg="Config updated")

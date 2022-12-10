@@ -19,4 +19,4 @@ def get_address():
         printd(msg="Wallet not found, please create wallet first", type_p=PrintType.ERROR)
         quit()
     address = wallet.get_address()
-    printd(msg=address, type_p=PrintType.SUCCESS)
+    printd(msg="Address: " + address, type_p=PrintType.SUCCESS)

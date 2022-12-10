@@ -33,7 +33,7 @@ fi
 echo -e "${GR}Install package..${EC}"
 echo -e "${GR}======================================================${EC}"
 pip3 install -r requirements.txt
-cp .env.sample .env
+
 
 printf "
     ${GR}PyWallet: Micro wallet by bxdoan${EC}
@@ -42,6 +42,11 @@ printf "
     ${GR}USAGE${EC}
 
 ${HL}FRIST: cd $SH/$DIRECTORY
+    run bash script
+
+chmod +x ./run.sh ; ./run.sh
+
+    or run python script
 
 1. Create your wallet
     ./pywallet.py create
