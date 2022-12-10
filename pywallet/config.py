@@ -55,7 +55,6 @@ class Config(object):
             config_path = os.path.join(WALLET_PATH, JSON_CONF)
             with open(config_path, "w+") as f:
                 f.write(json.dumps(self.config, indent = 4))
-                printd("Config updated", type_p=PrintType.SUCCESS)
                 return True
 
     def check_config_exited(self) -> None:

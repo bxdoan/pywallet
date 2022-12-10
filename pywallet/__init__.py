@@ -12,6 +12,7 @@ def set_up():
         config_sample_path = os.path.join(HOME_DIR, 'config.sample.json')
         with open(config_sample_path, "r") as cs:
             config_sample = json.load(cs)
+            config_sample.update({"keypair_path": f"{WALLET_PATH}/wallet/id.json"})
 
             config_path = os.path.join(WALLET_PATH, JSON_CONF)
             with open(config_path, "w+") as f:
