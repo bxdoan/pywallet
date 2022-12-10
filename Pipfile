@@ -5,13 +5,14 @@ name = "pypi"
 
 [packages]
 eth-account = "==0.5.9"
-web3 = "==5.28.0"
+web3 = "==5.31.2"
 click = "*"
 eth-tester = "*"
 py-evm="*"
 vyper = "*"
 lark = "*"
 python-dotenv = "*"
+etherscan-python = "*"
 
 #test
 pytest = "*"

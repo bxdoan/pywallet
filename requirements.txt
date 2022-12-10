@@ -1,5 +1,5 @@
-eth_account==0.5.7
-web3==5.28.0
+eth_account==0.5.9
+web3==5.31.2
 click
 eth-tester
 eth-utils==1.10.0
@@ -10,3 +10,4 @@ lark
 pytest
 flake8
 python-dotenv
+etherscan-python
