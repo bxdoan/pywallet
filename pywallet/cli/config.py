@@ -13,7 +13,7 @@ def get_config():
     Usage: config get
     """
     config_data = config.get_config()
-    printd(msg="URL: " + config_data["url"])
+    printd(msg="URL: " + config_data["url"]['eth'])
     printd(msg="Keypair Path: " + config_data["keypair_path"])
 
 

@@ -8,7 +8,7 @@ so it can't be hack
 
 (This is a re-write of the original version of PyWallet which is no longer update, still available [here](https://github.com/bui-duc-huy/tartarus-wallet).)
 
-![alt text](https://raw.githubusercontent.com/bxdoan/pywallet/main/assets/preview.png)
+![alt text](https://raw.githubusercontent.com/bxdoan/pywallet/main/assets/preview2.png)
 
 ## Set up
 1. Install package
@@ -28,11 +28,17 @@ pipenv sync
 
 2. Execute mod for wallet.py
 ```sh
-chmod 777 ./pywallet.py
+chmod +x ./run.py
 ```
 
 ## Usage
 1. Run app
+```sh
+./run.sh
+```
+
+or run in python
+
 ```sh
 ./pywallet.py
 ```
