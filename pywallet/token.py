@@ -7,6 +7,7 @@ from pywallet import helper
 from pywallet.constants import ETH_NATIVE_ADDRESS, ERC20_ABI, HOME_DIR, PrintType
 from pywallet.helper import to_checksum_address
 from pywallet.print import printd
+from etherscan import Etherscan
 
 
 class Token(object):
@@ -50,6 +51,12 @@ class Token(object):
             except Exception as e:
                 pass
         return list_balance
+
+    def get_balances2(self) -> list:
+        eth = Etherscan("QMNZT8GB8E5IMN3QEG5KQ9X7H5IQAGZZ9P")  # key in quotation marks
+        balance = eth.get_eth_balance(address=self.wallet_address)
+        balance = str(float(balance) / 10 ** 18)
+        return balance
 
     def get_symbol(self) -> str:
         if self.token_address == ETH_NATIVE_ADDRESS:

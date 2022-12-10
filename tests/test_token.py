@@ -90,7 +90,7 @@ def test_get_symbol_and_decimals(w3, token_cont):
     assert t2.get_decimal() == TOKEN_DECIMALS
 
 
-@pytest.mark.skip(reason='Call external service')
+# @pytest.mark.skip(reason='Call external service')
 class TestCoinExternal(TestCase):
 
     def setUp(self):
@@ -108,6 +108,17 @@ class TestCoinExternal(TestCase):
             token_address=token_address,
         )
         balance = t.get_balance()
+        assert balance
+
+    def test_get_balance2(self):
+        wallet_address = '0x4e65175f05b4140a0747c29cce997cd4bb7190d4'  # my wallet
+        token_address = '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9'  # AAVE
+        t = Token(
+            url=self.url_eth,
+            wallet_address=wallet_address,
+            token_address=token_address,
+        )
+        balance = t.get_balances2()
         assert balance
 
     def test_get_balance_matic(self):
