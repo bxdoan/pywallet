@@ -1,7 +1,10 @@
 #! /usr/bin/env python3
 import os
 import json
-from pywallet.constants import JSON_CONF, WALLET_PATH, PrintType, DEFAULT_CONFIG, NETWORK_DEFAULT
+
+from pywallet import helper
+from pywallet.constants import JSON_CONF, WALLET_PATH, PrintType, HOME_DIR, \
+    JSON_CONF_SAMPLE
 from pywallet.print import printd
 
 
@@ -38,8 +41,22 @@ class Config(object):
         return True
 
     def create_default_config(self, path: str) -> None:
-        with open(path, "w+") as f:
-            f.write(json.dumps(DEFAULT_CONFIG, indent = 4))
+        config_sample_path = os.path.join(HOME_DIR, 'config.sample.json')
+        with open(config_sample_path, "r") as cs:
+            config_sample = json.load(cs)
+            with open(path, "w+") as f:
+                f.write(json.dumps(config_sample, indent = 4))
+
+    def diff_and_update(self):
+        config_sample_path = os.path.join(HOME_DIR, JSON_CONF_SAMPLE)
+        with open(config_sample_path, "r") as cs:
+            config_sample = json.load(cs)
+            self.config = helper.diff_dict_and_add_more_key(config_sample, self.config)
+            config_path = os.path.join(WALLET_PATH, JSON_CONF)
+            with open(config_path, "w+") as f:
+                f.write(json.dumps(self.config, indent = 4))
+                printd("Config updated", type_p=PrintType.SUCCESS)
+                return True
 
     def check_config_exited(self) -> None:
         config_path = os.path.join(WALLET_PATH, JSON_CONF)

@@ -42,6 +42,33 @@ def run_bash(cmd : str = '') -> tuple:
     return r, err
 
 
+# diff two dict and add more key to the first dict
+def diff_dict_and_add_more_key(sample_dict : dict, real_dict : dict ) -> dict:
+    for key, value_sample_by_key in sample_dict.items():
+        if not value_sample_by_key:
+            continue
+        elif isinstance(value_sample_by_key, dict):
+            value_real_by_key = real_dict.get(key)
+            if isinstance(value_real_by_key, dict):
+                val_after = diff_dict_and_add_more_key(value_sample_by_key, value_real_by_key)
+                real_dict = do_change_val(real_dict, key, val_after)
+            else:
+                real_dict = do_change_val(real_dict, key, value_sample_by_key)
+        else:
+            value_real_by_key = real_dict.get(key)
+            if not value_real_by_key:
+                real_dict = do_change_val(real_dict, key, value_sample_by_key)
+    return real_dict
+
+
+def do_change_val(data : dict, k : str, v=None) -> dict:
+    data.update({
+        k: v
+    })
+    return data
+
+
+
 def halt_if_run_bash_failed(run_bash_result):
     output_text, error_code = run_bash_result
     if error_code != 0 :

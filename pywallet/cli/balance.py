@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 import click
 from pywallet.config import Config
-from pywallet.constants import ETH_NATIVE_ADDRESS
+from pywallet.constants import ETH_NATIVE_ADDRESS, PrintType
 from pywallet.wallet import Wallet
 from pywallet.print import printd
 from pywallet.token import Token
@@ -19,7 +19,7 @@ def balance_handler(token_address : str, wallet_address : str, network : str) ->
     wallet = Wallet(config.get_keypair_path())
 
     if not wallet.is_wallet_exited():
-        printd(msg="Wallet not found, please create wallet first")
+        printd(msg="Wallet not found, please create wallet first\n use command: create", type_p=PrintType.ERROR)
         quit()
 
     if token_address == "Native token":
@@ -45,7 +45,7 @@ def balance_all(wallet_address: str) -> None:
     wallet = Wallet(config.get_keypair_path())
 
     if not wallet.is_wallet_exited():
-        printd(msg="Wallet not found, please create wallet first")
+        printd(msg="Wallet not found, please create wallet first\n use command: create", type_p=PrintType.ERROR)
         quit()
 
     if wallet_address == "":

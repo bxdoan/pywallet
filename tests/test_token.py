@@ -1,6 +1,7 @@
 from unittest import TestCase
 import pytest
 
+from pywallet import Config
 from pywallet.constants import ETH_NATIVE_ADDRESS
 from pywallet.token import Token
 
