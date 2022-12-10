@@ -32,7 +32,7 @@ DEFAULT_CONFIG = {
     "keypair_path": WALLET_PATH + "/wallet" + "/id.json",
     "url": {
         "eth": "https://eth-mainnet.g.alchemy.com/v2/qzq9rBJLZpygokkr-JVb0J26UGF6yGKl",
-        "polygon": "https://polygon-mainnet.g.alchemy.com/v2/lokrEicQrmGyZaP8rWQTTrW0F1QnjmN8"
+        "matic": "https://polygon-mainnet.g.alchemy.com/v2/lokrEicQrmGyZaP8rWQTTrW0F1QnjmN8"
     }
 }
 

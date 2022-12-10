@@ -31,7 +31,7 @@ def balance_handler(token_address: str, wallet_address: str) -> None:
 
     balance = token.get_balance()
     symbol = token.get_symbol()
-    printd(msg=balance + " " + symbol)
+    printd(msg="Balance: " + balance + " " + symbol)
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))

@@ -25,4 +25,4 @@ def search_token(search_key: str, network : str) -> None:
     printd(msg=f"Found {len(list_tokens)} results", type_p=PrintType.SUCCESS)
     longest = helper.get_length_of_longest_string_value_in_list_of_dict(list_tokens, key="symbol")
     for t in list_tokens:
-        printd(msg=f"Address: {t['address']}, Symbol: {t['symbol']:>{longest}}, Name: {t['name']}")
+        printd(msg=f"Address: {t['address']} Symbol: {t['symbol']:>{longest}} Name: {t['name']}")

@@ -93,7 +93,8 @@ def test_get_symbol_and_decimals(w3, token_cont):
 class TestCoinExternal(TestCase):
 
     def setUp(self):
-        self.url = 'https://mainnet.infura.io/v3/9e4bc49c44c34ac7ae3e5c34fe5e1d62'  # mainnet
+        self.url_eth = 'https://mainnet.infura.io/v3/9e4bc49c44c34ac7ae3e5c34fe5e1d62'  # mainnet eth
+        self.url_matic = "https://polygon-mainnet.g.alchemy.com/v2/lokrEicQrmGyZaP8rWQTTrW0F1QnjmN8"  # mainnet matics
 
     def tearDown(self): pass
 
@@ -101,7 +102,29 @@ class TestCoinExternal(TestCase):
         wallet_address = '0x4e65175f05b4140a0747c29cce997cd4bb7190d4'  # my wallet
         token_address = '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9'  # AAVE
         t = Token(
-            url=self.url,
+            url=self.url_eth,
+            wallet_address=wallet_address,
+            token_address=token_address,
+        )
+        balance = t.get_balance()
+        assert balance
+
+    def test_get_balance_matic(self):
+        wallet_address = '0x4e65175f05b4140a0747c29cce997cd4bb7190d4'  # my wallet
+        token_address = '0x0000000000000000000000000000000000001010'  # MATIC
+        t = Token(
+            url=self.url_matic,
+            wallet_address=wallet_address,
+            token_address=token_address,
+        )
+        balance = t.get_balance()
+        assert balance
+
+    def test_get_balance_matic_2(self):
+        wallet_address = '0x4e65175f05b4140a0747c29cce997cd4bb7190d4'  # my wallet
+        token_address = '0xAa9654BECca45B5BDFA5ac646c939C62b527D394'  # DINO
+        t = Token(
+            url=self.url_matic,
             wallet_address=wallet_address,
             token_address=token_address,
         )
