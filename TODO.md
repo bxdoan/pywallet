@@ -1,8 +1,11 @@
 # TODO
-
+- Config network
 - Unittest for wallet class
 - Setup pytest with coverage
-- Add support op/optimisc
+- Add support bsc network
+  - change config url network
+  - default network
+- Add support op/optimism network
   - change config url network
   - default network
 - Support to get all balance

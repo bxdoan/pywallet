@@ -10,7 +10,7 @@ PyWallet support network `eth` and `matic`.
 
 (This is a re-write of the original version of PyWallet which is no longer update, still available [here](https://github.com/bui-duc-huy/tartarus-wallet).)
 
-![alt text](https://raw.githubusercontent.com/bxdoan/pywallet/main/assets/preview2.png)
+![alt text](https://raw.githubusercontent.com/bxdoan/pywallet/main/assets/preview.png)
 
 ## Set up
 1. Install package
