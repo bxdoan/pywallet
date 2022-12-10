@@ -26,12 +26,12 @@ def transfer_handler(receiver: str, amount: float, token_address: str, network: 
 
     token = Token(url=config['url'][network], wallet_address=wallet.get_address(), token_address=token_address)
 
-    printd("Password: ")
+    printd("Type your password: ")
     password = getpass("")
 
     balance = token.get_balance()
     symbol = token.get_symbol()
-    printd(msg=balance + " " + symbol)
+    printd(msg="Balance: " + balance + " " + symbol)
     printd(msg="Transferring...")
 
     transfer_params = {
