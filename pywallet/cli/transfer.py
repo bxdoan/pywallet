@@ -20,7 +20,12 @@ def transfer_handler(receiver: str, amount: float, token_address: str, network: 
     transfer <receiver> <amount> -t <token-address>\n
     """
     config = Config().get_config()
-    wallet = Wallet(**config)
+    if network == '':
+        network = config['network']
+    wallet = Wallet(
+        keypair_path=config.get("keypair_path"),
+        url=config["url"][network],
+    )
     if token_address == "Native token":
         token_address = ETH_NATIVE_ADDRESS
 

@@ -4,7 +4,7 @@ from eth_account import Account
 import secrets
 import json
 from web3 import Web3
-from pywallet.constants import ERC20_ABI, PrintType
+from pywallet.constants import ERC20_ABI, PrintType, ETH_NATIVE_SYMBOL
 from pywallet.helper import to_checksum_address
 from pywallet.print import printd
 
@@ -57,22 +57,37 @@ class Wallet(object):
         
         return account.address
 
-    def transfer_token(self, token_info : dict, amount : float, private_key : str, receiver : str) -> str:
+    def transfer_token(
+            self, token_info : dict, amount : float, private_key : str, receiver : str, sender : str = None
+    ) -> str:
         try:
-            address = self.get_address()
-            checksum_token = to_checksum_address(token_info["address"])
-            contract = self.w3.eth.contract(address=checksum_token, abi=ERC20_ABI)
-            amount = int(amount * (10 ** int(token_info["decimals"])))
-            check_address = to_checksum_address(address)
-            nonce = self.w3.eth.getTransactionCount(check_address)
-            gas_params = {
-                'nonce': nonce,
-                'gas': 70000,
-                'gasPrice': self.w3.toWei('10', 'gwei'),
-            }
-            checksum_receiver = to_checksum_address(receiver)
-            transfer = contract.functions.transfer(checksum_receiver, amount)
-            transaction = transfer.buildTransaction(gas_params)
+            if sender is None:
+                sender = self.get_address()
+
+            if token_info["symbol"] == ETH_NATIVE_SYMBOL:
+                nonce = self.w3.eth.getTransactionCount(sender)
+                transaction = {
+                    'nonce': nonce,
+                    'to': to_checksum_address(receiver),
+                    'value': self.w3.toWei(amount, 'ether'),
+                    'gas': 2000000,
+                    'gasPrice': self.w3.toWei('10', 'gwei')
+                }
+            else:
+                checksum_token = to_checksum_address(token_info["address"])
+                contract = self.w3.eth.contract(address=checksum_token, abi=ERC20_ABI)
+                amount = int(amount * (10 ** int(token_info["decimals"])))
+                check_address = to_checksum_address(sender)
+                nonce = self.w3.eth.getTransactionCount(check_address)
+                gas_params = {
+                    'nonce': nonce,
+                    'gas': 2000000,
+                    'gasPrice': self.w3.toWei('10', 'gwei'),
+                }
+                checksum_receiver = to_checksum_address(receiver)
+                transfer = contract.functions.transfer(checksum_receiver, amount)
+                transaction = transfer.buildTransaction(gas_params)
+
             signed_txn = self.w3.eth.account.signTransaction(transaction, private_key=private_key)
             self.w3.eth.sendRawTransaction(signed_txn.rawTransaction)
             return signed_txn.hash
