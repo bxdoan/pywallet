@@ -21,6 +21,9 @@ jobs:
     - name: Install plugin
       run: |
         pip install pytest-github-actions-annotate-failures
+    - name: check flake8
+      run: |
+        command: ./script/flake8-check.sh
     - name: Test with pytest
       run: |
         ./script/test_github.sh
