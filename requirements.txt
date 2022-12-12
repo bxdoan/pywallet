@@ -8,6 +8,7 @@ py-evm==0.5.0a3
 vyper
 lark
 pytest
+pytest-cov
 flake8
 python-dotenv
 etherscan-python
