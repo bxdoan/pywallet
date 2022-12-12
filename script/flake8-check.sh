@@ -39,7 +39,7 @@ loc=$(git ls-files   |   grep '\.py'       | grep -Ev __boneyard__ | xargs wc -l
 
 # flake with exclude dir in $atlas/.flake8
 # l_cover aka number line coveragetest_record_visits
-l_cover=$(pipenv run flake8 | wc -l)
+l_cover=$(flake8 | wc -l)
 
 # calculate percentage of coverage pep8
 percent=$((${l_cover} * 100 / ${loc}))
