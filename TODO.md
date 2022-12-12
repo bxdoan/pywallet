@@ -1,7 +1,6 @@
 # TODO
 - Config address token for each network
 - Unittest for wallet class
-- Setup pytest with coverage
 - Add support bsc network
   - change config url network
   - default network

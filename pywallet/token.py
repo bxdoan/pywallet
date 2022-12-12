@@ -4,7 +4,7 @@ import os
 from web3 import Web3
 
 from pywallet import helper
-from pywallet.constants import ETH_NATIVE_ADDRESS, ERC20_ABI, HOME_DIR, PrintType
+from pywallet.constants import ETH_NATIVE_ADDRESS, ERC20_ABI, HOME_DIR, PrintType, ETH_NATIVE_DECIMAL, ETH_NATIVE_SYMBOL
 from pywallet.helper import to_checksum_address
 from pywallet.print import printd
 
@@ -33,22 +33,40 @@ class Token(object):
             balance = str(balance / 10 ** self.get_decimal())
         return balance
 
-    def get_balances(self, contract_path=None) -> list:
-        list_token = helper.get_list_of_name_files_without_ext_in_folder(contract_path)
+    def get_balances(self, coin_addresses : list = None) -> list:
+        if not coin_addresses:
+            coin_addresses = [ETH_NATIVE_ADDRESS]
+        else:
+            coin_addresses = [ETH_NATIVE_ADDRESS] + coin_addresses
         list_balance = []
-        for token_address in list_token:
-            try:
-                contract = self.w3.eth.contract(address=to_checksum_address(token_address), abi=ERC20_ABI)
-                balance = contract.functions.balanceOf(self.checksum_wallet_address).call()
-                if not balance:
-                    continue
-                symbol = contract.functions.symbol().call()
-                decimal = contract.functions.decimals().call()
-                balance = str(balance / 10 ** decimal)
-                printd(msg=f"Balance of {symbol} is {balance}")
-                list_balance.append({"symbol": symbol, "balance": balance, 'decimal': decimal})
-            except Exception as e:
-                pass
+        for token_address in coin_addresses:
+            if token_address == ETH_NATIVE_ADDRESS:
+                balance = self.w3.eth.get_balance(self.checksum_wallet_address)
+                balance = str(float(balance) / 10 ** 18)
+                list_balance.append({
+                    "symbol": ETH_NATIVE_SYMBOL,
+                    "balance": balance,
+                    'decimal': ETH_NATIVE_DECIMAL,
+                    'address': ETH_NATIVE_ADDRESS
+                })
+            else:
+                try:
+                    contract = self.w3.eth.contract(address=to_checksum_address(token_address), abi=ERC20_ABI)
+                    balance = contract.functions.balanceOf(self.checksum_wallet_address).call()
+                    if not balance:
+                        continue
+                    symbol = contract.functions.symbol().call()
+                    decimal = contract.functions.decimals().call()
+                    balance = str(balance / 10 ** decimal)
+                    list_balance.append({
+                        "symbol": symbol,
+                        "balance": balance,
+                        'decimal': decimal,
+                        'address': token_address
+                    })
+                except Exception as e:
+                    printd(e, type_p=PrintType.ERROR)
+                    pass
         return list_balance
 
     def get_symbol(self) -> str:

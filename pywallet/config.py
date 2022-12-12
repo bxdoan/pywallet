@@ -77,6 +77,11 @@ class Config(object):
             network = self.config['network']
         return self.config["url"][network]
 
+    def get_coin_list(self, network : str = None) -> list:
+        if not network:
+            network = self.config['network']
+        return self.config["coin_address"][network]
+
     def get_network(self) -> str:
         return self.config['network']
 

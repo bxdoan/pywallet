@@ -39,7 +39,7 @@ def balance_handler(token_address : str, wallet_address : str, network : str) ->
 @click.option('-w', '--wallet-address', 'wallet_address', help="Wallet address", default="", show_default=False)
 def balance_all(wallet_address: str) -> None:
     """Get balance all token\n
-    balance -t <token_address> -w <wallet_address>
+    balance-all -w <wallet_address>
     """
     config = Config()
     wallet = Wallet(config.get_keypair_path())
@@ -51,8 +51,9 @@ def balance_all(wallet_address: str) -> None:
     if wallet_address == "":
         wallet_address = wallet.get_address()
 
-    Token(
-            url=config.get_url(),
-            wallet_address=wallet_address,
-    ).get_balances(config.get_contract_path())
-
+    list_balance = Token(
+        url=config.get_url(),
+        wallet_address=wallet_address,
+    ).get_balances(config.get_coin_list())
+    for balance in list_balance:
+        printd(msg="Balance: " + balance['balance'] + " " + balance['symbol'])
