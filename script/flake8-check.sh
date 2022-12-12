@@ -14,7 +14,7 @@ ER='\033[0;31m' # red color
 CM='\033[0;32m' # comment color
 GR='\033[0;32m' # green color
 WH='\033[0;37m' # white color
-expected=6
+expected=20
 
 function print_res() {
     printf "
