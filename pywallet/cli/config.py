@@ -1,7 +1,6 @@
 #! /usr/bin/env python3
 import click
 from pywallet.config import Config
-from pywallet.constants import NETWORK_DEFAULT
 from pywallet.print import printd
 
 config = Config()

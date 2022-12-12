@@ -36,6 +36,7 @@ printf "${GR}
 [5] create       Create new keypair
 [6] search       Search token information by search key
 [7] transfer     Transfer for wallet
+[8] token        COnfig token address for wallet
 [0] exit         Exit
 ${EC}
 "
@@ -140,6 +141,37 @@ elif [[ $option == 7|| $option == 07 ]]; then
   fi
 	python3 ./pywallet.py transfer "$reicever" "$amount" -t "$token_address"
 	script
+
+elif [[ $option == 8 || $option == 08 ]]; then
+	printf "${GR}\nWhat do you want get token address or set token address ?\n
+[1] get  Get token address config
+[2] set  Set token address config
+[3] del  Delete token address config
+[0] exit Exit
+${EC}
+"
+	read -p $'\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]\e[1;93m Choose an option: \e[1;92m' optionconfig
+	if [[ $optionconfig == 1 || $optionconfig == 01 ]]; then
+    printf "\n\e[1;92m Please wait ...\n\n\e[1;92m"
+    ./pywallet.py token get
+    script
+  elif [[ $optionconfig == 2 || $optionconfig == 02 ]]; then
+    printf "\nEnter address...\n"
+	  read -p $'\n\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]\e[1;93m Enter address: \e[1;92m' address
+    printf "\nEnter network (None for using eth)...\n"
+	  read -p $'\n\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]\e[1;93m Enter network: \e[1;92m' network
+    python3 ./pywallet.py token set $address --network $network
+    script
+  elif [[ $optionconfig == 3 || $optionconfig == 03 ]]; then
+    printf "\nEnter address ...\n"
+	  read -p $'\n\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]\e[1;93m Enter address: \e[1;92m' address
+	  printf "\nEnter network (None for using eth)...\n"
+	  read -p $'\n\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]\e[1;93m Enter network: \e[1;92m' network
+    python3 ./pywallet.py token del $address --network $network
+    script
+  else
+    script
+  fi
 
 elif [[ $option == 0 || $option == 00 ]]; then
   exit 0

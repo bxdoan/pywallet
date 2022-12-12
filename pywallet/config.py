@@ -40,6 +40,30 @@ class Config(object):
         printd("Config updated", type_p=PrintType.SUCCESS)
         return True
 
+    def set_coin_address(self, coin_address: str, network : str = None) -> None:
+        if not network:
+            network = self.config['network']
+        network_coin_address = self.config["coin_address"][network]
+        network_coin_address = helper.check_string_in_list_of_string_and_add_more_if_not_exited(network_coin_address,
+                                                                                                coin_address)
+        self.config["coin_address"][network] = network_coin_address
+        config_path = os.path.join(WALLET_PATH, JSON_CONF)
+        with open(config_path, "w+") as f:
+            f.write(json.dumps(self.config, indent = 4))
+        printd("Config updated", type_p=PrintType.SUCCESS)
+
+    def del_coin_address(self, coin_address: str, network : str = None) -> None:
+        if not network:
+            network = self.config['network']
+        network_coin_address = self.config["coin_address"][network]
+        network_coin_address = helper.check_string_in_list_of_string_and_remove_if_exited(network_coin_address,
+                                                                                          coin_address)
+        self.config["coin_address"][network] = network_coin_address
+        config_path = os.path.join(WALLET_PATH, JSON_CONF)
+        with open(config_path, "w+") as f:
+            f.write(json.dumps(self.config, indent = 4))
+        printd("Config updated", type_p=PrintType.SUCCESS)
+
     def create_default_config(self, path: str) -> None:
         config_sample_path = os.path.join(HOME_DIR, 'config.sample.json')
         with open(config_sample_path, "r") as cs:

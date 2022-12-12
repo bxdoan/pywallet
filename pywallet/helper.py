@@ -68,7 +68,6 @@ def do_change_val(data : dict, k : str, v=None) -> dict:
     return data
 
 
-
 def halt_if_run_bash_failed(run_bash_result):
     output_text, error_code = run_bash_result
     if error_code != 0 :
@@ -85,6 +84,19 @@ def get_length_of_longest_string_value_in_list_of_dict(list_of_dict : list = [],
         if len(d[key]) > longest:
             longest = len(d[key])
     return longest
+
+
+# check string in list of string and add more if not exited
+def check_string_in_list_of_string_and_add_more_if_not_exited(list_of_string : list = [], string : str = '') -> list:
+    if string not in list_of_string:
+        list_of_string.append(string)
+    return list_of_string
+
+# check string in list of string and remove if exited
+def check_string_in_list_of_string_and_remove_if_exited(list_of_string : list = [], string : str = '') -> list:
+    if string in list_of_string:
+        list_of_string.remove(string)
+    return list_of_string
 
 
 def get_list_of_name_dir_in_folder(folder_path):

@@ -4,7 +4,8 @@ import os
 from web3 import Web3
 
 from pywallet import helper
-from pywallet.constants import ETH_NATIVE_ADDRESS, ERC20_ABI, HOME_DIR, PrintType, ETH_NATIVE_DECIMAL, ETH_NATIVE_SYMBOL
+from pywallet.constants import ETH_NATIVE_ADDRESS, ERC20_ABI, HOME_DIR, PrintType, ETH_NATIVE_DECIMAL, \
+    ETH_NATIVE_SYMBOL, MATIC_NATIVE_ADDRESS
 from pywallet.helper import to_checksum_address
 from pywallet.print import printd
 
@@ -33,22 +34,21 @@ class Token(object):
             balance = str(balance / 10 ** self.get_decimal())
         return balance
 
-    def get_balances(self, coin_addresses : list = None) -> list:
+    def get_balances(self, coin_addresses : list = None, network : str = None) -> list:
+        default_token = self._get_default_token(network)
         if not coin_addresses:
-            coin_addresses = [ETH_NATIVE_ADDRESS]
+            coin_addresses = [default_token["address"]]
         else:
-            coin_addresses = [ETH_NATIVE_ADDRESS] + coin_addresses
+            coin_addresses = [default_token["address"]] + coin_addresses
         list_balance = []
         for token_address in coin_addresses:
             if token_address == ETH_NATIVE_ADDRESS:
                 balance = self.w3.eth.get_balance(self.checksum_wallet_address)
                 balance = str(float(balance) / 10 ** 18)
-                list_balance.append({
-                    "symbol": ETH_NATIVE_SYMBOL,
-                    "balance": balance,
-                    'decimal': ETH_NATIVE_DECIMAL,
-                    'address': ETH_NATIVE_ADDRESS
+                default_token.update({
+                    "balance": balance
                 })
+                list_balance.append(default_token)
             else:
                 try:
                     contract = self.w3.eth.contract(address=to_checksum_address(token_address), abi=ERC20_ABI)
@@ -68,6 +68,20 @@ class Token(object):
                     printd(e, type_p=PrintType.ERROR)
                     pass
         return list_balance
+
+    def _get_default_token(self, network : str = None) -> dict:
+        if network == "matic":
+            return {
+                "address": MATIC_NATIVE_ADDRESS,
+                "symbol": "MATIC",
+                "decimal": ETH_NATIVE_DECIMAL,
+            }
+        else:
+            return {
+                "address": ETH_NATIVE_ADDRESS,
+                "symbol": ETH_NATIVE_SYMBOL,
+                "decimal": ETH_NATIVE_DECIMAL,
+            }
 
     def get_symbol(self) -> str:
         if self.token_address == ETH_NATIVE_ADDRESS:
@@ -112,12 +126,16 @@ class TokenSearch(object):
         self.search_key = search_key
         self.network = network or 'eth'
 
+    def _load_json_file(self, path):
+        with open(path, "r") as f:
+            return json.load(f)
+
     def _load_all_json_file(self, path):
         list_token = []
         for file in os.listdir(path):
             if file.endswith(".json"):
-                with open(os.path.join(path, file), "r") as f:
-                    list_token.append(json.load(f))
+                json_data = self._load_json_file(os.path.join(path, file))
+                list_token.append(json_data)
         return list_token
 
     def _network_is_valid(self):
@@ -137,4 +155,18 @@ class TokenSearch(object):
         for token in list_token:
             if self.search_key.lower() in token["symbol"].lower() or self.search_key.lower() in token["name"].lower():
                 list_result.append(token)
+        return list_result
+
+    def search_by_address(self, list_token_address=None) -> list:
+        if not self._network_is_valid():
+            printd(msg=f"Network {self.network} is not valid", type_p=PrintType.ERROR)
+            exit()
+
+        token_dir = f"{HOME_DIR}/tokens/{self.network.lower()}"
+        list_result = []
+        for token_address in list_token_address:
+            path_file = os.path.join(token_dir, f"{token_address}.json")
+            if os.path.isfile(path_file):
+                json_data = self._load_json_file(path_file)
+                list_result.append(json_data)
         return list_result

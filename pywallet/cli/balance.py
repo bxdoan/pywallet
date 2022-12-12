@@ -51,9 +51,10 @@ def balance_all(wallet_address: str) -> None:
     if wallet_address == "":
         wallet_address = wallet.get_address()
 
+    network = config.get_config()["network"]
     list_balance = Token(
         url=config.get_url(),
         wallet_address=wallet_address,
-    ).get_balances(config.get_coin_list())
+    ).get_balances(coin_addresses=config.get_coin_list(), network=network)
     for balance in list_balance:
         printd(msg="Balance: " + balance['balance'] + " " + balance['symbol'])
