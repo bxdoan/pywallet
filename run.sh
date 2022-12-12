@@ -36,7 +36,7 @@ printf "${GR}
 [5] create       Create new keypair
 [6] search       Search token information by search key
 [7] transfer     Transfer for wallet
-[8] token        COnfig token address for wallet
+[8] token        Config token address for wallet
 [0] exit         Exit
 ${EC}
 "
@@ -88,7 +88,7 @@ ${EC}
 	script
 
 elif [[ $option == 4 || $option == 04 ]]; then
-	printf "${GR}\nWhat do you want get config or set config ?\n
+	printf "${GR}\nWhat do you want get network or set network ?\n
 [1] get  Get network config
 [2] set  Set network config
 [0] exit Exit
@@ -153,21 +153,35 @@ ${EC}
 	read -p $'\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]\e[1;93m Choose an option: \e[1;92m' optionconfig
 	if [[ $optionconfig == 1 || $optionconfig == 01 ]]; then
     printf "\n\e[1;92m Please wait ...\n\n\e[1;92m"
-    ./pywallet.py token get
+    printf "\nEnter network (None for using your default config)...\n"
+	  read -p $'\n\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]\e[1;93m Enter network: \e[1;92m' network
+	  if [[ $network == "" ]]; then
+     ./pywallet.py token get
+    else
+     ./pywallet.py token get -n $network
+    fi
     script
   elif [[ $optionconfig == 2 || $optionconfig == 02 ]]; then
     printf "\nEnter address...\n"
 	  read -p $'\n\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]\e[1;93m Enter address: \e[1;92m' address
-    printf "\nEnter network (None for using eth)...\n"
+    printf "\nEnter network (None for using your default config)...\n"
 	  read -p $'\n\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]\e[1;93m Enter network: \e[1;92m' network
-    python3 ./pywallet.py token set $address --network $network
+	  if [[ $network == "" ]]; then
+     ./pywallet.py token set $address
+    else
+      ./pywallet.py token set $address --network $network
+    fi
     script
   elif [[ $optionconfig == 3 || $optionconfig == 03 ]]; then
     printf "\nEnter address ...\n"
 	  read -p $'\n\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]\e[1;93m Enter address: \e[1;92m' address
-	  printf "\nEnter network (None for using eth)...\n"
+	  printf "\nEnter network (None for using your default config)...\n"
 	  read -p $'\n\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]\e[1;93m Enter network: \e[1;92m' network
-    python3 ./pywallet.py token del $address --network $network
+	  if [[ $network == "" ]]; then
+	    ./pywallet.py token del $address
+    else
+      ./pywallet.py token del $address --network $network
+    fi
     script
   else
     script
