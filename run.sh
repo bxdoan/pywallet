@@ -102,7 +102,7 @@ ${EC}
   elif [[ $optionconfig == 2 || $optionconfig == 02 ]]; then
     printf "\nEnter network (None for using eth)...\n"
 	  read -p $'\n\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]\e[1;93m Enter network: \e[1;92m' network
-    python3 ./pywallet.py network set --network $network
+    python3 ./pywallet.py network set $network
     script
   else
     script
