@@ -59,7 +59,6 @@ class Config(object):
         config_path = os.path.join(WALLET_PATH, JSON_CONF)
         with open(config_path, "w+") as f:
             f.write(json.dumps(json_conf, indent = 4))
-        printd("Config updated", type_p=PrintType.SUCCESS)
 
     def create_default_config(self) -> None:
         config_sample_path = os.path.join(HOME_DIR, 'config.sample.json')

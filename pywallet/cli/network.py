@@ -19,8 +19,7 @@ def get_network() -> None:
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
-@click.option('-n', '--network', 'network', help="Network (default for eth)", default=NETWORK_DEFAULT,
-              how_default=True)
+@click.argument("network", type=str)
 def set_network(network: str) -> None:
     """
     Set network\n

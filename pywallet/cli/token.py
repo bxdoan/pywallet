@@ -42,6 +42,7 @@ def set_token(coin_address : str, network : str) -> None:
         network = config_data["network"]
 
     Config().set_coin_address(coin_address=coin_address, network=network)
+    printd("Config updated", type_p=PrintType.SUCCESS)
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
@@ -57,6 +58,7 @@ def del_token(coin_address : str, network : str) -> None:
         network = config_data["network"]
 
     Config().del_coin_address(coin_address=coin_address, network=network)
+    printd("Config updated", type_p=PrintType.SUCCESS)
 
 
 @click.group()
