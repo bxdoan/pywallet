@@ -19,7 +19,8 @@ def get_network() -> None:
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
-@click.option('-n', '--network', 'network', help="Network (default for eth)", default='eth', show_default=True)
+@click.option('-n', '--network', 'network', help="Network (default for eth)", default=NETWORK_DEFAULT,
+              how_default=True)
 def set_network(network: str) -> None:
     """
     Set network\n
@@ -29,10 +30,7 @@ def set_network(network: str) -> None:
         with click.Context(set_network) as ctx:
             click.echo(set_network.get_help(ctx))
     else:
-        success = config.set_config(network=network)
-
-        if success:
-            printd(msg="Network updated")
+        config.set_config(network=network)
 
 
 @click.group()

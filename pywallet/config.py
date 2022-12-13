@@ -22,7 +22,7 @@ class Config(object):
     def get_config(self):
         return self.config
 
-    def set_config(self, url: str = None, keypair_file: str = None, network: str = None) -> bool:
+    def set_config(self, url: str = None, keypair_file: str = None, network: str = None):
         config = self.config
         if url is not None:
             printd(msg="URL: " + url, type_p=PrintType.SUCCESS)
@@ -33,12 +33,7 @@ class Config(object):
         if keypair_file is not None:
             printd(msg="Keypair file: " + keypair_file, type_p=PrintType.SUCCESS)
             config["keypair_path"] = keypair_file
-
-        config_path = os.path.join(WALLET_PATH, JSON_CONF)
-        with open(config_path, "w+") as f:
-            f.write(json.dumps(config, indent = 4))
-        printd("Config updated", type_p=PrintType.SUCCESS)
-        return True
+        self._dump_config()
 
     def set_coin_address(self, coin_address: str, network : str = None) -> None:
         if not network:
@@ -47,10 +42,7 @@ class Config(object):
         network_coin_address = helper.check_string_in_list_of_string_and_add_more_if_not_exited(network_coin_address,
                                                                                                 coin_address)
         self.config["coin_address"][network] = network_coin_address
-        config_path = os.path.join(WALLET_PATH, JSON_CONF)
-        with open(config_path, "w+") as f:
-            f.write(json.dumps(self.config, indent = 4))
-        printd("Config updated", type_p=PrintType.SUCCESS)
+        self._dump_config()
 
     def del_coin_address(self, coin_address: str, network : str = None) -> None:
         if not network:
@@ -59,39 +51,40 @@ class Config(object):
         network_coin_address = helper.check_string_in_list_of_string_and_remove_if_exited(network_coin_address,
                                                                                           coin_address)
         self.config["coin_address"][network] = network_coin_address
+        self._dump_config()
+
+    def _dump_config(self, json_conf: dict = None) -> None:
+        if json_conf is None:
+            json_conf = self.config
         config_path = os.path.join(WALLET_PATH, JSON_CONF)
         with open(config_path, "w+") as f:
-            f.write(json.dumps(self.config, indent = 4))
+            f.write(json.dumps(json_conf, indent = 4))
         printd("Config updated", type_p=PrintType.SUCCESS)
 
-    def create_default_config(self, path: str) -> None:
+    def create_default_config(self) -> None:
         config_sample_path = os.path.join(HOME_DIR, 'config.sample.json')
         with open(config_sample_path, "r") as cs:
             config_sample = json.load(cs)
-            with open(path, "w+") as f:
-                f.write(json.dumps(config_sample, indent = 4))
+            self._dump_config(json_conf=config_sample)
 
     def diff_and_update(self):
         config_sample_path = os.path.join(HOME_DIR, JSON_CONF_SAMPLE)
         with open(config_sample_path, "r") as cs:
             config_sample = json.load(cs)
             self.config = helper.diff_dict_and_add_more_key(config_sample, self.config)
-            config_path = os.path.join(WALLET_PATH, JSON_CONF)
-            with open(config_path, "w+") as f:
-                f.write(json.dumps(self.config, indent = 4))
-                return True
+            self._dump_config()
 
     def check_config_exited(self) -> None:
         config_path = os.path.join(WALLET_PATH, JSON_CONF)
         if not os.path.isfile(config_path):
-            self.create_default_config(config_path)
+            self.create_default_config()
 
     def is_wallet_exited(self) -> bool:
         config_path = os.path.join(self.config["keypair_path"])
         if not os.path.isfile(config_path):
-            False
+            return False
         else:
-            True
+            return True
 
     def get_keypair_path(self) -> str:
         return self.config["keypair_path"]

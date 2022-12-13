@@ -43,7 +43,7 @@ def run_bash(cmd : str = '') -> tuple:
 
 
 # diff two dict and add more key to the first dict
-def diff_dict_and_add_more_key(sample_dict : dict, real_dict : dict ) -> dict:
+def diff_dict_and_add_more_key(sample_dict : dict, real_dict : dict) -> dict:
     for key, value_sample_by_key in sample_dict.items():
         if not value_sample_by_key:
             continue

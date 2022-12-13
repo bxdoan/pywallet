@@ -9,7 +9,6 @@ from pywallet.wallet import Wallet
 from pywallet.print import printd
 
 
-
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 @click.option('-n', '--network', 'network', help="Network (default for eth)", default='', show_default=True)
 def get_token(network: str) -> None:
