@@ -1,11 +1,13 @@
 # TODO
-- Config address token for each network
 - Unittest for wallet class
+- Add support near network
+  - change config url network
+  - default network
 - Add support bsc network
   - change config url network
   - default network
 - Add support op/optimism network
   - change config url network
   - default network
-- Support to get all balance
+- Support to get price from coingecko/binance/coinmarketcap
 - Support tornado cash
