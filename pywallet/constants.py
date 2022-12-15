@@ -11,6 +11,7 @@ WALLET_LIST_PATH = os.path.join(WALLET_PATH, "wallet")
 NETWORK_DEFAULT = "eth"
 JSON_CONF = "config.json"
 JSON_CONF_SAMPLE = 'config.sample.json'
+BNB_API_PRICE="https://api.binance.com/api/v3/ticker/price"
 # Defining the colors of the text in bash
 CBLINK = '\033[5m'
 CRED = '\33[31m'

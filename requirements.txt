@@ -7,8 +7,21 @@ trie==2.0.0a5
 py-evm==0.5.0a3
 vyper
 lark
-pytest
-pytest-cov
-flake8
 python-dotenv
 etherscan-python
+
+# near
+py-near
+ed25519
+aiohttp
+pyonear
+black
+mypy
+Sphinx
+sphinx-rtd-theme
+base58
+
+# test
+flake8
+pytest
+pytest-cov
