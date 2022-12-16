@@ -3,8 +3,7 @@ import os
 import json
 
 from pywallet import helper
-from pywallet.constants import JSON_CONF, WALLET_PATH, PrintType, HOME_DIR, \
-    JSON_CONF_SAMPLE
+from pywallet import constants
 from pywallet.print import printd
 
 
@@ -14,7 +13,7 @@ class Config(object):
         self._get_config()
 
     def _get_config(self) -> dict:
-        config_path = os.path.join(WALLET_PATH, JSON_CONF)
+        config_path = os.path.join(constants.WALLET_PATH, constants.JSON_CONF)
         with open(config_path, "r") as f:
             self.config = json.load(f)
         return self.config
@@ -25,13 +24,13 @@ class Config(object):
     def set_config(self, url: str = None, keypair_file: str = None, network: str = None):
         config = self.config
         if url is not None:
-            printd(msg="URL: " + url, type_p=PrintType.SUCCESS)
+            printd(msg="URL: " + url, type_p=constants.PrintType.SUCCESS)
             config["url"][network] = url
         if network is not None:
-            printd(msg="Network: " + network, type_p=PrintType.SUCCESS)
+            printd(msg="Network: " + network, type_p=constants.PrintType.SUCCESS)
             config["network"] = network
         if keypair_file is not None:
-            printd(msg="Keypair file: " + keypair_file, type_p=PrintType.SUCCESS)
+            printd(msg="Keypair file: " + keypair_file, type_p=constants.PrintType.SUCCESS)
             config["keypair_path"] = keypair_file
         self._dump_config()
 
@@ -56,25 +55,25 @@ class Config(object):
     def _dump_config(self, json_conf: dict = None) -> None:
         if json_conf is None:
             json_conf = self.config
-        config_path = os.path.join(WALLET_PATH, JSON_CONF)
+        config_path = os.path.join(constants.WALLET_PATH, constants.JSON_CONF)
         with open(config_path, "w+") as f:
             f.write(json.dumps(json_conf, indent = 4))
 
     def create_default_config(self) -> None:
-        config_sample_path = os.path.join(HOME_DIR, 'config.sample.json')
+        config_sample_path = os.path.join(constants.HOME_DIR, 'config.sample.json')
         with open(config_sample_path, "r") as cs:
             config_sample = json.load(cs)
             self._dump_config(json_conf=config_sample)
 
     def diff_and_update(self):
-        config_sample_path = os.path.join(HOME_DIR, JSON_CONF_SAMPLE)
+        config_sample_path = os.path.join(constants.HOME_DIR, constants.JSON_CONF_SAMPLE)
         with open(config_sample_path, "r") as cs:
             config_sample = json.load(cs)
             self.config = helper.diff_dict_and_add_more_key(config_sample, self.config)
             self._dump_config()
 
     def check_config_exited(self) -> None:
-        config_path = os.path.join(WALLET_PATH, JSON_CONF)
+        config_path = os.path.join(constants.WALLET_PATH, constants.JSON_CONF)
         if not os.path.isfile(config_path):
             self.create_default_config()
 
@@ -107,5 +106,5 @@ class Config(object):
     def print_config(self) -> None:
         keypair_path = self.config["keypair_path"]
         url = self.config["url"]
-        printd(msg="URL: " + url, type_p=PrintType.SUCCESS)
-        printd(msg="Keypair Path" + keypair_path, type_p=PrintType.SUCCESS)
+        printd(msg="URL: " + url, type_p=constants.PrintType.SUCCESS)
+        printd(msg="Keypair Path" + keypair_path, type_p=constants.PrintType.SUCCESS)

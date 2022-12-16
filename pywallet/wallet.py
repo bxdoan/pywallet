@@ -48,7 +48,7 @@ class Wallet(object):
             printd(msg="Wrong password", type_p=constants.PrintType.ERROR)
             exit()
 
-    def create_wallet(self, private_key: str, password: str, is_override: bool = False) -> str:
+    def create_wallet(self, private_key: str, password: str) -> str:
         if len(private_key) < 32:
             private_key = "0x" + secrets.token_hex(32)
 
@@ -89,13 +89,16 @@ class NearWallet(object):
     def __init__(
             self,
             keypair_path : str = '',
+            password : str = '',
             account_id: str = '',
             private_key : str = None,
             **kwargs
     ) -> None:
         self.keypair_path = keypair_path
-        self.account_id = account_id
-        self.private_key = private_key
+        self.password = password
+
+        self.account_id = account_id or self.get_account_id_from_keypair_path()
+        self.private_key = private_key or self.get_private_key()
 
         self.acc = kwargs.get("acc", None)
         self._build_acc()
@@ -103,6 +106,29 @@ class NearWallet(object):
     def _build_acc(self):
         self.acc = AccountNear(self.account_id, private_key=self.private_key)
         asyncio.run(self.acc.startup())
+
+    def get_private_key(self) -> str:
+        keypair_encrypted = self.load_keypair_encrypted()
+        try:
+            private_key = helper.PyWalletAES(self.password).decrypt(keypair_encrypted['encrypted_key'])
+            return private_key
+        except ValueError:
+            printd(msg="Wrong password", type_p=constants.PrintType.ERROR)
+            exit()
+
+    def get_account_id_from_keypair_path(self) -> str:
+        keypair_encrypted = self.load_keypair_encrypted()
+        return keypair_encrypted['account_id']
+
+    def load_keypair_encrypted(self):
+        with open(self.keypair_path, "r") as f:
+            keypair_encrypted = json.load(f)
+        return keypair_encrypted
+
+    def dump_keypair_encrypted(self, json_params: dict) -> None:
+        with open(self.keypair_path, "w+") as outfile:
+            json_object = json.dumps(json_params, indent=4)
+            outfile.write(json_object)
 
     def get_balance(self, address : str = None) -> str:
         if not address:
@@ -114,14 +140,11 @@ class NearWallet(object):
             return balance
         return ''
 
-    def create_wallet(self, password: str, is_override: bool = False) -> str:
+    def create_wallet(self, password: str) -> str:
         encrypted_key = helper.PyWalletAES(password).encrypt(self.private_key)
         json_params = {
             "account_id": self.account_id,
             "encrypted_key": encrypted_key,
         }
-        with open(self.keypair_path, "w+") as outfile:
-            json_object = json.dumps(json_params, indent=4)
-            outfile.write(json_object)
-
+        self.dump_keypair_encrypted(json_params)
         return self.acc.signer.account_id

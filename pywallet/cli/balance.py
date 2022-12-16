@@ -1,4 +1,6 @@
 #! /usr/bin/env python3
+from getpass import getpass
+
 import click
 from pywallet.config import Config
 from pywallet.constants import ETH_NATIVE_ADDRESS, PrintType, NEAR_SYMBOL
@@ -18,8 +20,12 @@ def balance_handler(token_address : str, wallet_address : str, network : str) ->
     config = Config()
 
     if network == NEAR_SYMBOL.lower() or config.get_network() == NEAR_SYMBOL.lower():
-        printd(msg="Near network is supported", type_p=PrintType.INFO)
-        balance = NearWallet(wallet_address).get_balance(wallet_address)
+        printd("Type your password: ")
+        password = getpass("")
+        balance = NearWallet(
+            keypair_path = config.get_keypair_near_path(),
+            password=password
+        ).get_balance()
         symbol = NEAR_SYMBOL
     else:
         wallet = Wallet(config.get_keypair_path())

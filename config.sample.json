@@ -1,5 +1,6 @@
 {
     "keypair_path": "~/.pywallet/wallet/id.json",
+    "keypair_near_path": "~/.pywallet/wallet/default.near.json",
     "network": "eth",
     "eth_scan_api": "some_eth_scan_api",
     "url": {

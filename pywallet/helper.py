@@ -4,8 +4,8 @@ import os
 import sys
 import time
 import subprocess
+import base58
 from web3 import Web3
-import base64
 from Crypto.Cipher import AES
 
 from pywallet.constants import TMP_DIR
@@ -169,8 +169,8 @@ class PyWalletAES:
         cipher      = AES.new(self.secret_key, AES.MODE_CFB, iv, segment_size=128)
         enc         = cipher.encrypt(padded)[:len(text)]
 
-        # return base64 string
-        return base64.b64encode(iv + enc).decode()
+        # return base string
+        return base58.b58encode(iv + enc).decode()
 
     def decrypt(self, text):
         """
@@ -179,7 +179,7 @@ class PyWalletAES:
         if not text:
             return False
 
-        text      = base64.b64decode(text)
+        text      = base58.b58decode(text)
         iv, value = text[:16], text[16:]
         rem       = len(value) % 16
 
@@ -188,3 +188,25 @@ class PyWalletAES:
 
         # return string as text
         return (cipher.decrypt(padded)[:len(value)]).decode()
+
+
+def normalize_to_bool(input):
+    if isinstance(input, bool):
+        return input
+
+    elif isinstance(input, str):
+        #TODO consider to replace below block by
+        # if   v in TRUE_VALUE_AS_STR:  data[k]=True
+        # elif v in FALSE_VALUE_AS_STR: data[k]=False
+
+        if input.lower().strip() == 'true': return True
+        if input.lower().strip() == 't':    return True
+        if input.lower().strip() == 'True': return True
+        if input.lower().strip() == 'T':    return True
+        if input.lower().strip() == 'yes':  return True
+        if input.lower().strip() == 'Yes':  return True
+        if input.lower().strip() == 'y':    return True
+        return False
+
+    else:
+        return False
