@@ -1,8 +1,8 @@
 #! /usr/bin/env python3
 import click
 from pywallet.config import Config
-from pywallet.constants import ETH_NATIVE_ADDRESS, PrintType
-from pywallet.wallet import Wallet
+from pywallet.constants import ETH_NATIVE_ADDRESS, PrintType, NEAR_SYMBOL
+from pywallet.wallet import Wallet, NearWallet
 from pywallet.print import printd
 from pywallet.token import Token
 
@@ -16,22 +16,31 @@ def balance_handler(token_address : str, wallet_address : str, network : str) ->
     balance -t <token_address> -w <wallet_address>
     """
     config = Config()
-    wallet = Wallet(config.get_keypair_path())
 
-    if not wallet.is_wallet_exited():
-        printd(msg="Wallet not found, please create wallet first\n use command: create", type_p=PrintType.ERROR)
+    if network == NEAR_SYMBOL.lower() or config.get_network() == NEAR_SYMBOL.lower():
+        printd(msg="Near network is supported", type_p=PrintType.INFO)
+        balance = NearWallet(wallet_address).get_balance(wallet_address)
+        symbol = NEAR_SYMBOL
+    else:
+        wallet = Wallet(config.get_keypair_path())
+
+        if not wallet.is_wallet_exited():
+            printd(msg="Wallet not found, please create wallet first\n use command: create", type_p=PrintType.ERROR)
+            quit()
+
+        if token_address == "Native token":
+            token_address = ETH_NATIVE_ADDRESS
+
+        if wallet_address == "":
+            wallet_address = wallet.get_address()
+
+        token = Token(config.get_url(network), wallet_address, token_address)
+        balance = token.get_balance()
+        symbol = token.get_symbol()
+
+    if balance is None:
+        printd(msg="Balance not found", type_p=PrintType.ERROR)
         quit()
-
-    if token_address == "Native token":
-        token_address = ETH_NATIVE_ADDRESS
-
-    if wallet_address == "":
-        wallet_address = wallet.get_address()
-
-    token = Token(config.get_url(network), wallet_address, token_address)
-
-    balance = token.get_balance()
-    symbol = token.get_symbol()
     printd(msg="Balance: " + balance + " " + symbol)
 
 

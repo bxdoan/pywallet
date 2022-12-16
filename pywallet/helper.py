@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
+import hashlib
 import os
 import sys
 import time
 import subprocess
 from web3 import Web3
+import base64
+from Crypto.Cipher import AES
+
 from pywallet.constants import TMP_DIR
 
 
@@ -139,3 +143,48 @@ def run_bash_complex(target_cmd, custom_name=None):
     _ = run_bash(sh_file)
     halt_if_run_bash_failed(_)
     return _
+
+
+class PyWalletAES:
+
+    def __init__(self, secret_key : str = ''):
+        self.secret_key = hashlib.sha256(secret_key.encode()).digest()
+
+    def encrypt(self, text):
+        """
+        This function will encrypt text to base64 string
+        ref https://gist.github.com/willshiao/f4b03650e5a82561a460b4a15789cfa1
+        :return
+            - base64 string
+            - False if email is blank/null
+        """
+        if not text:
+            return False
+
+        rem         = len(text) % 16
+        padded      = str.encode(text) + (b'\0' * (16 - rem)) if rem > 0 else str.encode(text)
+        iv          = os.urandom(AES.block_size)
+
+        # encrypt data with the private_key
+        cipher      = AES.new(self.secret_key, AES.MODE_CFB, iv, segment_size=128)
+        enc         = cipher.encrypt(padded)[:len(text)]
+
+        # return base64 string
+        return base64.b64encode(iv + enc).decode()
+
+    def decrypt(self, text):
+        """
+        This function is used to decrypt text for testing purpose
+        """
+        if not text:
+            return False
+
+        text      = base64.b64decode(text)
+        iv, value = text[:16], text[16:]
+        rem       = len(value) % 16
+
+        padded    = value + (b'\0' * (16 - rem)) if rem > 0 else value
+        cipher    = AES.new(self.secret_key, AES.MODE_CFB, iv, segment_size=128)
+
+        # return string as text
+        return (cipher.decrypt(padded)[:len(value)]).decode()

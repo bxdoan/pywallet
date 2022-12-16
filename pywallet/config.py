@@ -88,6 +88,9 @@ class Config(object):
     def get_keypair_path(self) -> str:
         return self.config["keypair_path"]
 
+    def get_keypair_near_path(self) -> str:
+        return self.config["keypair_near_path"]
+
     def get_url(self, network : str = None) -> str:
         if not network:
             network = self.config['network']

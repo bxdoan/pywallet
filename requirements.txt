@@ -20,6 +20,8 @@ mypy
 Sphinx
 sphinx-rtd-theme
 base58
+pydantic
+base64
 
 # test
 flake8

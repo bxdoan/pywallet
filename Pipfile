@@ -23,6 +23,7 @@ mypy = "*"
 Sphinx = "*"
 sphinx-rtd-theme = "*"
 base58 = "*"
+base64 = "*"
 
 #test
 pytest = "*"
