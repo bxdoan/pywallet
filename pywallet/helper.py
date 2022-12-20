@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
+import base64
 import hashlib
 import os
 import sys
 import time
 import subprocess
-import base58
-from web3 import Web3
-from Crypto.Cipher import AES
+import sys
+from itertools import cycle, zip_longest
+from random import randint, seed
 
+import base58
+from cryptography.hazmat.primitives.ciphers.algorithms import AES
+from web3 import Web3
+from cryptography.fernet import Fernet
 from pywallet.constants import TMP_DIR
 
 
@@ -145,49 +150,41 @@ def run_bash_complex(target_cmd, custom_name=None):
     return _
 
 
-class PyWalletAES:
-
+class PyWalletCry:
     def __init__(self, secret_key : str = ''):
-        self.secret_key = hashlib.sha256(secret_key.encode()).digest()
+        self.secret_key = secret_key
 
     def encrypt(self, text):
         """
-        This function will encrypt text to base64 string
-        ref https://gist.github.com/willshiao/f4b03650e5a82561a460b4a15789cfa1
+        This function will encrypt text to base58 string
         :return
             - base64 string
-            - False if email is blank/null
+            - False if text is blank/null
         """
         if not text:
             return False
-
-        rem         = len(text) % 16
-        padded      = str.encode(text) + (b'\0' * (16 - rem)) if rem > 0 else str.encode(text)
-        iv          = os.urandom(AES.block_size)
-
-        # encrypt data with the private_key
-        cipher      = AES.new(self.secret_key, AES.MODE_CFB, iv, segment_size=128)
-        enc         = cipher.encrypt(padded)[:len(text)]
-
-        # return base string
-        return base58.b58encode(iv + enc).decode()
+        addition_char = randint(0, 0x100)
+        if len(text) > len(self.secret_key):
+            pwd_iterable = cycle(self.secret_key)
+        else:
+            pwd_iterable = self.secret_key
+        ret = [chr(((ord(i) ^ ord(j)) + addition_char) % 0x100) for i, j in zip(text, pwd_iterable)]
+        return "".join(reversed(ret)) + chr(addition_char)
 
     def decrypt(self, text):
         """
-        This function is used to decrypt text for testing purpose
+        This function is used to decrypt text purpose
         """
         if not text:
             return False
-
-        text      = base58.b58decode(text)
-        iv, value = text[:16], text[16:]
-        rem       = len(value) % 16
-
-        padded    = value + (b'\0' * (16 - rem)) if rem > 0 else value
-        cipher    = AES.new(self.secret_key, AES.MODE_CFB, iv, segment_size=128)
-
-        # return string as text
-        return (cipher.decrypt(padded)[:len(value)]).decode()
+        addition_char = ord(text[-1])
+        if len(text) > len(self.secret_key):
+            pwd_iterable = cycle(self.secret_key)
+        else:
+            pwd_iterable = self.secret_key
+        ret = [chr((((ord(i) - addition_char) + 0x100) % 0x100) ^ ord(j)) for i, j in
+               zip(reversed(text[:-1]), pwd_iterable)]
+        return "".join(ret)
 
 
 def normalize_to_bool(input):
