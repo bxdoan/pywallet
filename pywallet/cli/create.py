@@ -16,7 +16,7 @@ def create_wallet():
     Usage: create
     """
     config = Config()
-    printd("Create key for network? (evm/near) (default for EVM wallet (eth/matic)): ")
+    printd("Create key for network? (evm/near) (default for evm wallet (eth/matic)): ")
     network = input()
     account_id = ""
     if network == NEAR_SYMBOL.lower() or config.get_network() == NEAR_SYMBOL.lower():

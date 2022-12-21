@@ -141,7 +141,7 @@ class NearWallet(object):
         return ''
 
     def create_wallet(self, password: str) -> str:
-        encrypted_key = helper.PyWalletAES(password).encrypt(self.private_key)
+        encrypted_key = helper.PyWalletCry(password).encrypt(self.private_key)
         json_params = {
             "account_id": self.account_id,
             "encrypted_key": encrypted_key,

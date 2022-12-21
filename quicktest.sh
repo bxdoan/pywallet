@@ -10,7 +10,8 @@ function _() {
     elif [[ -f "$HOME/.local/bin/pipenv" ]]; then
       [ -x pipenv ] && pipenv='pipenv' || pipenv="$HOME/.local/bin/pipenv"
     else
-      [ -x pipenv ] && pipenv='pipenv' || pipenv="$HOME/.pyenv/shims/pipenv"
+      echo "pipenv application not found"
+      exit 1
     fi
     mkdir -p "$SH/tmp"
     tee_log="$SH/tmp/$(basename $BASH_SOURCE).log"
