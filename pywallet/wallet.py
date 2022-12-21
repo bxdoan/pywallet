@@ -110,7 +110,7 @@ class NearWallet(object):
     def get_private_key(self) -> str:
         keypair_encrypted = self.load_keypair_encrypted()
         try:
-            private_key = helper.PyWalletAES(self.password).decrypt(keypair_encrypted['encrypted_key'])
+            private_key = helper.PyWalletCry(self.password).decrypt(keypair_encrypted['encrypted_key'])
             return private_key
         except ValueError:
             printd(msg="Wrong password", type_p=constants.PrintType.ERROR)

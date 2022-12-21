@@ -9,6 +9,7 @@ vyper
 lark
 python-dotenv
 etherscan-python
+cryptography
 
 # near
 py-near
