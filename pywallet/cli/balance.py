@@ -22,11 +22,12 @@ def balance_handler(token_address : str, wallet_address : str, network : str) ->
     if network == NEAR_SYMBOL.lower() or config.get_network() == NEAR_SYMBOL.lower():
         printd("Type your password: ")
         password = getpass("")
-        balance = NearWallet(
+        near_wallet = NearWallet(
             keypair_path = config.get_keypair_near_path(),
             password=password
-        ).get_balance()
-        symbol = NEAR_SYMBOL
+        )
+        balance = near_wallet.get_balance(address=wallet_address, token_address=token_address)
+        symbol = NEAR_SYMBOL if not token_address else near_wallet.get_symbols(token_address=token_address)
     else:
         wallet = Wallet(config.get_keypair_path())
 

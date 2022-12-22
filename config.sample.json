@@ -11,7 +11,7 @@
     "coin_address": {
         "bsc": [],
         "eth": [],
-        "near": [],
+        "near": ["token.sweat"],
         "matic": []
     }
 }

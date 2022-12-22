@@ -130,15 +130,36 @@ class NearWallet(object):
             json_object = json.dumps(json_params, indent=4)
             outfile.write(json_object)
 
-    def get_balance(self, address : str = None) -> str:
+    def get_balance(self, address : str = None, token_address : str = None) -> str:
         if not address:
             address = self.account_id
-        balance = asyncio.run(self.acc.get_balance(address))
-        if balance:
-            # format yoctoNEAR
-            balance = str(balance / constants.NEAR)
-            return balance
-        return ''
+
+        try:
+            if token_address:
+                token_info = self.get_token_info(token_address)
+                balance = asyncio.run(self.acc.view_function(token_address, 'ft_balance_of',
+                                                             {'account_id': address})).result
+                balance = float(balance) / (10 ** int(token_info['decimals']))
+                return f"{balance}"
+            else:
+                balance = asyncio.run(self.acc.get_balance(address))
+                if balance:
+                    # format yoctoNEAR
+                    balance = str(balance / constants.NEAR)
+                    return balance
+
+            return ''
+        except Exception as e:
+            printd(msg=e, type_p=constants.PrintType.ERROR)
+            return ''
+
+    def get_token_info(self, token_address) -> dict:
+        token_info = asyncio.run(self.acc.view_function(token_address, 'ft_metadata', {})).result
+        return token_info
+
+    def get_symbols(self, token_address) -> str:
+        token_info = self.get_token_info(token_address)
+        return token_info['symbol']
 
     def create_wallet(self, password: str) -> str:
         encrypted_key = helper.PyWalletCry(password).encrypt(self.private_key)
