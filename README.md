@@ -6,7 +6,7 @@
 PyWallet is python script encrypt your private key. Unlike normal extension wallet, PyWallet can't connect to browser, 
 so it can't be hack
 
-PyWallet support network `eth` and `matic`.
+PyWallet support network `eth`, `matic` and `near`.
 
 (This is a re-write of the original version of PyWallet which is no longer update, still available [here](https://github.com/bui-duc-huy/tartarus-wallet).)
 
@@ -92,6 +92,13 @@ or
 ./quicktest.sh
 ```
 
+## Contact
+[Telegram](https://t.me/bxdoan)
+
+[Email](mailto:hi@bxdoan.com)
+
 ## Thanks for use
+Buy me a coffee
+
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/bxdoan)
 
