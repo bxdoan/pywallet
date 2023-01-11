@@ -8,7 +8,6 @@ so it can't be hack
 
 PyWallet support network `eth`, `matic` and `near`.
 
-(This is a re-write of the original version of PyWallet which is no longer update, still available [here](https://github.com/bui-duc-huy/tartarus-wallet).)
 
 ![alt text](https://raw.githubusercontent.com/bxdoan/pywallet/main/assets/preview.png)
 
@@ -91,6 +90,8 @@ or
 ```sh
 ./quicktest.sh
 ```
+
+NOTE: you can read more in [Usage.md](https://raw.githubusercontent.com/bxdoan/pywallet/main/docs/Usage.md)
 
 ## Contact
 [Telegram](https://t.me/bxdoan)
