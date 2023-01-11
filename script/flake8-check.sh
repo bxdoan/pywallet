@@ -37,7 +37,7 @@ It takes ${GR}${EXE_TIME}${EC} seconds to complete this script...\n"
 loc=$(git ls-files   |   grep '\.py'       | grep -Ev __boneyard__ | xargs wc -l | awk '{w=$1} END{print w}')
 # list all file git     only python file     exclude __boneyard__    count line         get result
 
-# flake with exclude dir in $atlas/.flake8
+# flake with exclude dir in $pywallet/.flake8
 # l_cover aka number line coveragetest_record_visits
 l_cover=$(flake8 | wc -l)
 

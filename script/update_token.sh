@@ -23,15 +23,18 @@ sudo apt install curl git -y
 echo -e "${GR}Clone ethereum-lists..${EC}"
 echo "======================================================"
 sleep 1
-cd $RH
+# shellcheck disable=SC2164
+cd "$RH"
 if [[ -d "$RH/$DIRECTORY" ]]; then
-    echo "$DIRECTORY exists"
+    echo "${GR}$DIRECTORY exists${EC}"
+    # shellcheck disable=SC2164
     cd "$RH/$DIRECTORY"
     git pull
     # shellcheck disable=SC2103
-    cd $RH
+    # shellcheck disable=SC2164
+    cd "$RH"
 else
-    echo "$DIRECTORY does NOT exists"
+    echo "${GR}$DIRECTORY does NOT exists, clone it${EC}"
     git clone https://github.com/MyEtherWallet/ethereum-lists
 fi
 
@@ -39,9 +42,10 @@ fi
 echo -e "${GR}Copy tokens..${EC}"
 echo "======================================================"
 sleep 1
-cd $RH
+# shellcheck disable=SC2164
+cd "$RH"
 from="$RH/$DIRECTORY/src/tokens/"
 to="$PH/tokens/"
 echo "copy from: $from to: $to"
-cp -r "$RH/$DIRECTORY/src/tokens/" $PH/tokens
+cp -r "$RH/$DIRECTORY/src/tokens/" "$PH"/tokens
 
