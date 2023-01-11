@@ -1,8 +1,6 @@
 import requests
 
 from pywallet import constants
-from pywallet.print import pd
-from pywallet.constants import PrintType
 
 
 class Price(object):

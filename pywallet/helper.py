@@ -1,18 +1,10 @@
 #!/usr/bin/env python3
-import base64
-import hashlib
 import os
-import sys
 import time
 import subprocess
 import sys
-from itertools import cycle, zip_longest
-from random import randint, seed
 
-import base58
-from cryptography.hazmat.primitives.ciphers.algorithms import AES
 from web3 import Web3
-from cryptography.fernet import Fernet
 from pywallet.constants import TMP_DIR
 
 
