@@ -26,7 +26,6 @@ class Price(object):
                 except KeyError:
                     price = 0
 
-                printd(f"Price of {self.symbol.upper()} is {price} USDT", type_p=PrintType.INFO)
                 return price
 
         return None

@@ -4,6 +4,7 @@ from getpass import getpass
 import click
 from pywallet.config import Config
 from pywallet.constants import ETH_NATIVE_ADDRESS, PrintType, NEAR_SYMBOL
+from pywallet.prices import Price
 from pywallet.wallet import Wallet, NearWallet
 from pywallet.print import printd
 from pywallet.token import Token
@@ -48,7 +49,14 @@ def balance_handler(token_address : str, wallet_address : str, network : str) ->
     if balance is None:
         printd(msg="Balance not found", type_p=PrintType.ERROR)
         quit()
-    printd(msg="Balance: " + balance + " " + symbol)
+    msg = "Balance: " + balance + " " + symbol
+
+    price = Price(symbol=symbol).get_price()
+    if price:
+        balance_usd = round(float(balance) * float(price), 2)
+        msg += f" | In USD {balance_usd} ({symbol}=${price}USD)"
+
+    printd(msg=msg)
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
@@ -73,4 +81,11 @@ def balance_all(wallet_address: str) -> None:
         wallet_address=wallet_address,
     ).get_balances(coin_addresses=config.get_coin_list(), network=network)
     for balance in list_balance:
-        printd(msg="Balance: " + balance['balance'] + " " + balance['symbol'])
+        msg = "Balance: " + balance["balance"] + " " + balance["symbol"]
+
+        price = Price(symbol=balance["symbol"]).get_price()
+        if price:
+            balance_usd = round(float(balance["balance"]) * float(price), 2)
+            msg += f" | In USD {balance_usd} ({balance['symbol']}=${price}USD)"
+
+        printd(msg=msg)
