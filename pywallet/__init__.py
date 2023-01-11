@@ -3,7 +3,7 @@ import json
 
 from pywallet.config import Config
 from pywallet import constants
-from pywallet import print
+from pywallet import auth
 
 
 def set_up():

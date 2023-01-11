@@ -4,7 +4,7 @@ import json
 
 from pywallet import helper
 from pywallet import constants
-from pywallet.print import printd
+from pywallet.print import pd
 
 
 class Config(object):
@@ -24,13 +24,13 @@ class Config(object):
     def set_config(self, url: str = None, keypair_file: str = None, network: str = None):
         config = self.config
         if url is not None:
-            printd(msg="URL: " + url, type_p=constants.PrintType.SUCCESS)
+            pd(msg="URL: " + url, type_p=constants.PrintType.SUCCESS)
             config["url"][network] = url
         if network is not None:
-            printd(msg="Network: " + network, type_p=constants.PrintType.SUCCESS)
+            pd(msg="Network: " + network, type_p=constants.PrintType.SUCCESS)
             config["network"] = network
         if keypair_file is not None:
-            printd(msg="Keypair file: " + keypair_file, type_p=constants.PrintType.SUCCESS)
+            pd(msg="Keypair file: " + keypair_file, type_p=constants.PrintType.SUCCESS)
             config["keypair_path"] = keypair_file
         self._dump_config()
 
@@ -106,5 +106,5 @@ class Config(object):
     def print_config(self) -> None:
         keypair_path = self.config["keypair_path"]
         url = self.config["url"]
-        printd(msg="URL: " + url, type_p=constants.PrintType.SUCCESS)
-        printd(msg="Keypair Path" + keypair_path, type_p=constants.PrintType.SUCCESS)
+        pd(msg="URL: " + url, type_p=constants.PrintType.SUCCESS)
+        pd(msg="Keypair Path" + keypair_path, type_p=constants.PrintType.SUCCESS)

@@ -3,11 +3,10 @@ import json
 import os
 from web3 import Web3
 
-from pywallet import helper
 from pywallet.constants import ETH_NATIVE_ADDRESS, ERC20_ABI, HOME_DIR, PrintType, ETH_NATIVE_DECIMAL, \
     ETH_NATIVE_SYMBOL, MATIC_NATIVE_ADDRESS
-from pywallet.helper import to_checksum_address
-from pywallet.print import printd
+from pywallet.print import pd
+from pywallet import helper
 
 
 class Token(object):
@@ -15,8 +14,8 @@ class Token(object):
         self.w3 = kwargs.get("w3", None)
         self.wallet_address = wallet_address
         self.token_address = token_address
-        self.checksum_wallet_address = to_checksum_address(wallet_address) if wallet_address else None
-        self.checksum_token_address = to_checksum_address(token_address) if token_address else None
+        self.checksum_wallet_address = helper.to_checksum_address(wallet_address) if wallet_address else None
+        self.checksum_token_address = helper.to_checksum_address(token_address) if token_address else None
         self.list_token = kwargs.get("list_token", None)
         self._build_w3(url)
 
@@ -51,7 +50,7 @@ class Token(object):
                 list_balance.append(default_token)
             else:
                 try:
-                    contract = self.w3.eth.contract(address=to_checksum_address(token_address), abi=ERC20_ABI)
+                    contract = self.w3.eth.contract(address=helper.to_checksum_address(token_address), abi=ERC20_ABI)
                     balance = contract.functions.balanceOf(self.checksum_wallet_address).call()
                     if not balance:
                         continue
@@ -65,7 +64,7 @@ class Token(object):
                         'address': token_address
                     })
                 except Exception as e:
-                    printd(e, type_p=PrintType.ERROR)
+                    pd(e, type_p=PrintType.ERROR)
                     pass
         return list_balance
 
@@ -146,7 +145,7 @@ class TokenSearch(object):
 
     def search(self, list_token=None) -> list:
         if not self._network_is_valid():
-            printd(msg=f"Network {self.network} is not valid", type_p=PrintType.ERROR)
+            pd(msg=f"Network {self.network} is not valid", type_p=PrintType.ERROR)
             exit()
 
         token_dir = f"{HOME_DIR}/tokens/{self.network.lower()}"
@@ -159,7 +158,7 @@ class TokenSearch(object):
 
     def search_by_address(self, list_token_address=None) -> list:
         if not self._network_is_valid():
-            printd(msg=f"Network {self.network} is not valid", type_p=PrintType.ERROR)
+            pd(msg=f"Network {self.network} is not valid", type_p=PrintType.ERROR)
             exit()
 
         token_dir = f"{HOME_DIR}/tokens/{self.network.lower()}"

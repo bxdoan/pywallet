@@ -4,7 +4,7 @@ import click
 
 from pywallet.config import Config
 from pywallet.constants import ETH_NATIVE_ADDRESS, PrintType, NETWORK_DEFAULT
-from pywallet.print import printd
+from pywallet.print import pd
 from pywallet.token import Token
 from pywallet.wallet import Wallet
 
@@ -29,13 +29,13 @@ def transfer_handler(receiver: str, amount: float, token_address: str, network: 
 
     token = Token(url=config['url'][network], wallet_address=wallet.get_address(), token_address=token_address)
 
-    printd("Type your password: ")
+    pd("Type your password: ")
     password = getpass("")
 
     balance = token.get_balance()
     symbol = token.get_symbol()
-    printd(msg="Balance: " + balance + " " + symbol)
-    printd(msg="Transferring...")
+    pd(msg="Balance: " + balance + " " + symbol)
+    pd(msg="Transferring...")
 
     transfer_params = {
         'token_info': token.get_token_info(),
@@ -45,6 +45,6 @@ def transfer_handler(receiver: str, amount: float, token_address: str, network: 
     }
     trans_hash = wallet.transfer_token(**transfer_params)
     if trans_hash:
-        printd("Transfer successfully", type_p=PrintType.SUCCESS)
-        printd(f"Transaction hash: " + trans_hash)
+        pd("Transfer successfully", type_p=PrintType.SUCCESS)
+        pd(f"Transaction hash: " + trans_hash)
 

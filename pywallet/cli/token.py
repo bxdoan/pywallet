@@ -6,7 +6,7 @@ from pywallet.config import Config
 from pywallet.constants import PrintType
 from pywallet.token import TokenSearch
 from pywallet.wallet import Wallet
-from pywallet.print import printd
+from pywallet.print import pd
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
@@ -26,7 +26,7 @@ def get_token(network: str) -> None:
     ).search_by_address(list_token_address=list_token_address)
     longest = helper.get_length_of_longest_string_value_in_list_of_dict(list_tokens, key="symbol")
     for t in list_tokens:
-        printd(msg=f"Address: {t['address']} Symbol: {t['symbol']:>{longest}} Name: {t['name']}")
+        pd(msg=f"Address: {t['address']} Symbol: {t['symbol']:>{longest}} Name: {t['name']}")
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
@@ -42,7 +42,7 @@ def set_token(coin_address : str, network : str) -> None:
         network = config_data["network"]
 
     Config().set_coin_address(coin_address=coin_address, network=network)
-    printd("Config updated", type_p=PrintType.SUCCESS)
+    pd("Config updated", type_p=PrintType.SUCCESS)
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
@@ -58,7 +58,7 @@ def del_token(coin_address : str, network : str) -> None:
         network = config_data["network"]
 
     Config().del_coin_address(coin_address=coin_address, network=network)
-    printd("Config updated", type_p=PrintType.SUCCESS)
+    pd("Config updated", type_p=PrintType.SUCCESS)
 
 
 @click.group()

@@ -2,7 +2,7 @@
 import click
 from pywallet.config import Config
 from pywallet.constants import NETWORK_DEFAULT
-from pywallet.print import printd
+from pywallet.print import pd
 
 config = Config()
 
@@ -15,7 +15,7 @@ def get_network() -> None:
     """
     config_data = config.get_config()
     network = config_data["network"]
-    printd(msg="Network: " + network)
+    pd(msg="Network: " + network)
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))

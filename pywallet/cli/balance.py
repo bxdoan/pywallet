@@ -6,7 +6,7 @@ from pywallet.config import Config
 from pywallet.constants import ETH_NATIVE_ADDRESS, PrintType, NEAR_SYMBOL
 from pywallet.prices import Price
 from pywallet.wallet import Wallet, NearWallet
-from pywallet.print import printd
+from pywallet.print import pd
 from pywallet.token import Token
 
 
@@ -21,7 +21,7 @@ def balance_handler(token_address : str, wallet_address : str, network : str) ->
     config = Config()
 
     if network == NEAR_SYMBOL.lower() or config.get_network() == NEAR_SYMBOL.lower():
-        printd("Type your password: ")
+        pd("Type your password: ")
         password = getpass("")
         near_wallet = NearWallet(
             keypair_path = config.get_keypair_near_path(),
@@ -33,7 +33,7 @@ def balance_handler(token_address : str, wallet_address : str, network : str) ->
         wallet = Wallet(config.get_keypair_path())
 
         if not wallet.is_wallet_exited():
-            printd(msg="Wallet not found, please create wallet first\n use command: create", type_p=PrintType.ERROR)
+            pd(msg="Wallet not found, please create wallet first\n use command: create", type_p=PrintType.ERROR)
             quit()
 
         if token_address == "Native token":
@@ -47,7 +47,7 @@ def balance_handler(token_address : str, wallet_address : str, network : str) ->
         symbol = token.get_symbol()
 
     if balance is None:
-        printd(msg="Balance not found", type_p=PrintType.ERROR)
+        pd(msg="Balance not found", type_p=PrintType.ERROR)
         quit()
     msg = "Balance: " + balance + " " + symbol
 
@@ -56,7 +56,7 @@ def balance_handler(token_address : str, wallet_address : str, network : str) ->
         balance_usd = round(float(balance) * float(price), 2)
         msg += f" | In USD {balance_usd} ({symbol}=${price}USD)"
 
-    printd(msg=msg)
+    pd(msg=msg)
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
@@ -69,7 +69,7 @@ def balance_all(wallet_address: str) -> None:
     wallet = Wallet(config.get_keypair_path())
 
     if not wallet.is_wallet_exited():
-        printd(msg="Wallet not found, please create wallet first\n use command: create", type_p=PrintType.ERROR)
+        pd(msg="Wallet not found, please create wallet first\n use command: create", type_p=PrintType.ERROR)
         quit()
 
     if wallet_address == "":
@@ -88,4 +88,4 @@ def balance_all(wallet_address: str) -> None:
             balance_usd = round(float(balance["balance"]) * float(price), 2)
             msg += f" | In USD {balance_usd} ({balance['symbol']}=${price}USD)"
 
-        printd(msg=msg)
+        pd(msg=msg)

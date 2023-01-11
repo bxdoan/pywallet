@@ -30,7 +30,7 @@ class Print(object):
         print(message, end="\n", flush=True)
 
 
-def printd(msg='', type_p=None) -> None:
+def pd(msg='', type_p=None) -> None:
     if type_p:
         Print(type_p=type_p)._out(message=msg)
     else:

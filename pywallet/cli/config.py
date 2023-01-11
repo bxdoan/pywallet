@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 import click
 from pywallet.config import Config
-from pywallet.print import printd
+from pywallet.print import pd
 
 config = Config()
 
@@ -16,9 +16,9 @@ def get_config(network: str) -> None:
     config_data = config.get_config()
     if not network:
         network = config_data["network"]
-    printd(msg="Network: " + network)
-    printd(msg="URL: " + config_data["url"][network])
-    printd(msg="Keypair Path: " + config_data["keypair_path"])
+    pd(msg="Network: " + network)
+    pd(msg="URL: " + config_data["url"][network])
+    pd(msg="Keypair Path: " + config_data["keypair_path"])
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
@@ -36,7 +36,7 @@ def set_config(url: str, keypair_file: str, network: str) -> None:
         success = config.set_config(url=url, keypair_file=keypair_file)
 
         if success:
-            printd(msg="Config updated")
+            pd(msg="Config updated")
 
 
 @click.group()

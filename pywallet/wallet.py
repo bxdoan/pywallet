@@ -1,15 +1,15 @@
 #! /usr/bin/env python3
 import asyncio
-import os 
-from eth_account import Account as AccountEth
-from pynear.account import Account as AccountNear
+import os
 import secrets
 import json
+from eth_account import Account as AccountEth
+from pynear.account import Account as AccountNear
 from web3 import Web3
 
-from pywallet import constants
+from pywallet import constants, auth
 from pywallet import helper
-from pywallet.print import printd
+from pywallet.print import pd
 
 
 class Wallet(object):
@@ -45,7 +45,7 @@ class Wallet(object):
             private_key = AccountEth.decrypt(keypair_encrypted, password)
             return private_key
         except ValueError:
-            printd(msg="Wrong password", type_p=constants.PrintType.ERROR)
+            pd(msg="Wrong password", type_p=constants.PrintType.ERROR)
             exit()
 
     def create_wallet(self, private_key: str, password: str) -> str:
@@ -80,7 +80,7 @@ class Wallet(object):
             self.w3.eth.sendRawTransaction(signed_txn.rawTransaction)
             return signed_txn.hash
         except Exception as e:
-            printd(msg=e, type_p=constants.PrintType.ERROR)
+            pd(msg=e, type_p=constants.PrintType.ERROR)
             return None
 
 
@@ -110,10 +110,10 @@ class NearWallet(object):
     def get_private_key(self) -> str:
         keypair_encrypted = self.load_keypair_encrypted()
         try:
-            private_key = helper.PyWalletCry(self.password).decrypt(keypair_encrypted['encrypted_key'])
+            private_key = auth.decrypt_(self.password, keypair_encrypted['encrypted_key'])
             return private_key
         except ValueError:
-            printd(msg="Wrong password", type_p=constants.PrintType.ERROR)
+            pd(msg="Wrong password", type_p=constants.PrintType.ERROR)
             exit()
 
     def get_account_id_from_keypair_path(self) -> str:
@@ -150,7 +150,7 @@ class NearWallet(object):
 
             return ''
         except Exception as e:
-            printd(msg=e, type_p=constants.PrintType.ERROR)
+            pd(msg=e, type_p=constants.PrintType.ERROR)
             return ''
 
     def get_token_info(self, token_address) -> dict:
@@ -162,7 +162,7 @@ class NearWallet(object):
         return token_info['symbol']
 
     def create_wallet(self, password: str) -> str:
-        encrypted_key = helper.PyWalletCry(password).encrypt(self.private_key)
+        encrypted_key = auth.encrypt_(password, self.private_key)
         json_params = {
             "account_id": self.account_id,
             "encrypted_key": encrypted_key,
