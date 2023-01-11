@@ -16,8 +16,8 @@ code_coverage=`grep 'TOTAL' "$tee_log" | awk '{print $NF}'`
 echo "Minimum coverage percentage: ${min_coverage}%"
 echo "Code coverage percentage: ${code_coverage}%"
 
-has_failed_2nd_run=`grep -c  -E '=+.+failed|=+.+error'  "$tee_log" `  # know if parallel test failed ref. https://github.com/namgivu/pytest-start/commit/a921f9bf2d66519604e5b6846afedfd17198efc1
-if [[ $has_failed_2nd_run == '0' ]]; then
+has_failed_run=`grep -c  -E '=+.+failed|=+.+error'  "$tee_log" `
+if [[ $has_failed_run == '0' ]]; then
     exit 0
 else
     echo "All efforts failed"
