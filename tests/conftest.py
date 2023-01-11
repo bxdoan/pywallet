@@ -40,7 +40,7 @@ def pytest_addoption(parser):
 
 
 @pytest.fixture(scope="module")
-def no_optimize(pytestconfig):
+def no_optimize(pytestconfig : pytest.Config) -> bool:
     return pytestconfig.getoption("no_optimize")
 
 
