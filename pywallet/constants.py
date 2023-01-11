@@ -69,3 +69,9 @@ class PrintType(BaseEnum):
     ERROR = "error"
     WARNING = "warning"
     SUCCESS = "success"
+
+
+class StableCoin(BaseEnum):
+    USDT = "usdt"
+    USDC = "usdc"
+    BUSD = "busd"
