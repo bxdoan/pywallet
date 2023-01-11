@@ -41,7 +41,7 @@ class PyWalletCry:
 
 
 def encrypt_(password : str, encrypted_key : str) -> str:
-    return PyWalletCry(password).decrypt(encrypted_key)
+    return PyWalletCry(password).encrypt(encrypted_key)
 
 
 def decrypt_(password : str, encrypted_key : str) -> str:

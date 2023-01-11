@@ -1,4 +1,4 @@
-from pywallet import helper
+from pywallet import auth
 
 
 def test_encrypt_decrypt():
@@ -6,8 +6,8 @@ def test_encrypt_decrypt():
     secret = "123456"
     text = "hello world"
     # encrypt
-    encrypted = helper.PyWalletCry(secret).encrypt(text)
+    encrypted = auth.encrypt_(secret, text)
 
     # decrypt
-    decrypted = helper.PyWalletCry(secret).decrypt(encrypted)
+    decrypted = auth.decrypt_(secret, encrypted)
     assert decrypted == text
