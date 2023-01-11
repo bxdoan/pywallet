@@ -16,7 +16,7 @@ You can get your wallet address by running the following command:
 ```
 
 ## Set up network
-PyWallet support network `eth` and `matic`.
+PyWallet support network `eth`, `matic` and `near`.
 
 1. Set up network
 
