@@ -14,16 +14,19 @@ class Price(object):
             for sc in constants.StableCoin.all():
                 # build url
                 url = f"{constants.BNB_API_PRICE}?symbol={self.symbol.upper()}{sc.upper()}"
-                # get response
-                response = requests.get(url)
 
                 try:
+                    # get response
+                    response = requests.get(url)
+
                     # get price
                     resp_json = response.json()
                     price = round(float(resp_json["price"]), 2)
                 except KeyError:
                     price = 0
 
-                return price
+                if price > 0:
+                    # if price is found, return it, otherwise continue
+                    return price
 
         return None
